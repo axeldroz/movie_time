@@ -10,11 +10,12 @@ import {
     StyleSheet,
     View,
     Text,
-    Button
+    Button,
+    TextInput
 } from 'react-native';
 import { connect } from 'react-redux';
 
-import TextInput from '../components/uikit/TextInput'
+//import TextInput from '../components/uikit/TextInput'
 import { whileStatement } from '@babel/types';
 //import { getUserToken } from '../authActions';
 
@@ -37,18 +38,23 @@ class LoginScreen extends React.Component {
             <View style={styles.container}>
                 <View style={styles.logincontainer}>
                     <Text style={styles.title}>Get Started !!</Text>
-                    <View style={styles.textinputcontainer}>
-                        <TextInput />
+                    <View style={styles.formcontainer}>  
+                        <View style={styles.textinputcontainer}>
+                            <TextInput placeholder="login" placeholderTextColor = "white"/>
+                        </View>
+                        <View style={styles.textinputcontainer}>
+                            <TextInput placeholder="password" placeholderTextColor = "white" secureTextEntry={true}/>
+                        </View>
                     </View>
-                    <View style={styles.textinputcontainer}>
-                        <TextInput />
+                    <View style={styles.buttonscontainer}>                  
+                         <View style={styles.buttoncontainer}>
+                            <Button title="LOGIN" onPress={() => navigate('Main', {name: 'Jane'})} />
+                        </View>
+                        <View style={styles.buttoncontainer}>
+                            <Button title="REGISTER" onPress={() => navigate('Next', {name: 'Jane'})} />
+                        </View>
                     </View>
-                    <View style={styles.buttoncontainer}>
-                        <Button title="LOGIN" onPress={() => navigate('Main', {name: 'Jane'})} />
-                    </View>
-                    <View style={styles.buttoncontainer}>
-                        <Button title="REGISTER" onPress={() => navigate('Next', {name: 'Jane'})} />
-                    </View>
+ 
                 </View>
             </View>
         );
@@ -75,13 +81,21 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 25
     },
+    formcontainer: {
+        marginTop: 35,
+    },
     textinputcontainer: {
         marginLeft: 0,
         marginRight: 0,
         marginTop: 15,
+        borderWidth: 1,
+        borderRadius: 5,
         //backgroundColor: 'green',
         fontSize: 30,
-        paddingBottom: 10
+        paddingBottom: 10,
+    },
+    textinputplaceholder: {
+        color: 'white'
     },
     buttoncontainer : {
         marginTop: 30,
