@@ -1,18 +1,21 @@
 /**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
+ * Created by Axel Drozdzynski on November 23th
  */
 
-import React from 'react';
+import React, {Component} from 'react';
+import { createStore, applyMiddleware } from 'redux';
+import axiosMiddleware from 'redux-axios-middleware';
+import { Provider, connect } from 'react-redux';
+import { createStackNavigator } from 'react-navigation-stack';
+import axios from 'axios';
+
 import {
   SafeAreaView,
   StyleSheet,
   ScrollView,
   View,
   Text,
+  Button,
   StatusBar,
 } from 'react-native';
 
@@ -23,92 +26,54 @@ import {
   DebugInstructions,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+//import { relative } from 'path';
 
-const App: () => React$Node = () => {
-  return (
-    <>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          <Header />
-          {global.HermesInternal == null ? null : (
-            <View style={styles.engine}>
-              <Text style={styles.footer}>Engine: Hermes</Text>
-            </View>
-          )}
-          <View style={styles.body}>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Step One</Text>
-              <Text style={styles.sectionDescription}>
-                Edit <Text style={styles.highlight}>App.js</Text> to change this
-                screen and then come back to see your edits.
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>See Your Changes</Text>
-              <Text style={styles.sectionDescription}>
-                <ReloadInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Debug</Text>
-              <Text style={styles.sectionDescription}>
-                <DebugInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Learn More</Text>
-              <Text style={styles.sectionDescription}>
-                Read the docs to discover what to do next:
-              </Text>
-            </View>
-            <LearnMoreLinks />
-          </View>
-        </ScrollView>
-      </SafeAreaView>
-    </>
-  );
-};
+import LoginScreen from './src/screens/LoginScreen.js'
+import NextScreen from './src/screens/NextScreen'
+import reducer from './src/redux/reducers/reducer';
+import { createAppContainer } from 'react-navigation';
 
-const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: Colors.lighter,
-  },
-  engine: {
-    position: 'absolute',
-    right: 0,
-  },
-  body: {
-    backgroundColor: Colors.white,
-  },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.black,
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-  footer: {
-    color: Colors.dark,
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
-  },
+const client = axios.create({
+  baseURL: 'localhost:9000',
+  responseType: 'json'
 });
 
-export default App;
+const store = createStore(reducer, applyMiddleware(axiosMiddleware(client)));
+
+const Component1Shell = () => {
+  return <LoginScreen />;
+};
+
+const Component2Shell = () => {
+  return <NextScreen />;
+};
+
+const Stack = createStackNavigator({
+  Login: {
+    screen: LoginScreen
+  },
+  Next: {
+    screen: NextScreen
+  }
+});
+
+const NavStack = createAppContainer(Stack);
+
+export default class App extends Component {
+    render() {
+        return (
+          <Provider store={store}>
+            <View style={styles.container}>
+              <NavStack />
+            </View>
+        </Provider>
+        );
+    }
+}
+
+const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: '#fff',
+    }
+});
