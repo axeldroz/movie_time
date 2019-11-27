@@ -18,6 +18,7 @@ import { connect } from 'react-redux';
 //import TextInput from '../components/uikit/TextInput'
 import { whileStatement } from '@babel/types';
 //import { getUserToken } from '../authActions';
+import MTTextInput from '../components/MTTextInput'
 
 class LoginScreen extends React.Component {
     static navigationOptions = {
@@ -38,13 +39,8 @@ class LoginScreen extends React.Component {
             <View style={styles.container}>
                 <View style={styles.logincontainer}>
                     <Text style={styles.title}>Get Started !!</Text>
-                    <View style={styles.formcontainer}>  
-                        <View style={styles.textinputcontainer}>
-                            <TextInput placeholder="login" placeholderTextColor = "white"/>
-                        </View>
-                        <View style={styles.textinputcontainer}>
-                            <TextInput placeholder="password" placeholderTextColor = "white" secureTextEntry={true}/>
-                        </View>
+                    <View style={styles.formcontainer}>
+                        <MTTextInput></MTTextInput>
                     </View>
                     <View style={styles.buttonscontainer}>                  
                          <View style={styles.buttoncontainer}>
