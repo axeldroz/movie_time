@@ -3,8 +3,8 @@
  */
 
 import { combineReducers } from 'redux'
-import tokenReducer from './tokenReducer'
+import loginReducer from './loginReducer'
 
 export default combineReducers({
-    token: tokenReducer
+    login: loginReducer
 })

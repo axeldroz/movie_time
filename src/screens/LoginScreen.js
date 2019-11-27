@@ -14,10 +14,11 @@ import {
     TextInput
 } from 'react-native';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 //import TextInput from '../components/uikit/TextInput'
 import { whileStatement } from '@babel/types';
-//import { getUserToken } from '../authActions';
+import { loginFetch } from '../redux/actions/loginAction';
 import MTTextInput from '../components/MTTextInput'
 
 class LoginScreen extends React.Component {
@@ -27,28 +28,61 @@ class LoginScreen extends React.Component {
 
     constructor() {
         super();
+
+        /*this.state = {
+            token: '',
+            username: 'YO',
+            password: ''
+        }
+        this.handleChange= this.handleChange.bind(this);*/
     }
 
     componentDidMount() {
+
+    }
+
+    handleChange(event = {}) {
+        const name = event.target && event.target.name;
+        const value = event.target && event.target.value;
+      
+        //this.state.username = value;
+    }
+
+    loadLogin() {
+        this.props.loginFetch("test1@mail.com", "password33")
     }
 
     render() {
         const {navigate} = this.props.navigation;
-
+        const token = this.props.tokens["login"]["token"];
+        const msg = this.props.tokens["login"]["message"];
+        console.log("MESSAGE : ", this.props.tokens);
         return (
             <View style={styles.container}>
                 <View style={styles.logincontainer}>
                     <Text style={styles.title}>Get Started !!</Text>
                     <View style={styles.formcontainer}>
-                        <MTTextInput></MTTextInput>
+                        <View style={styles.formcontainer}>  
+                            <View style={styles.textinputcontainer}>
+                                <TextInput /*ref= {(el) => { this.state.username = el; }}*/ placeholder="username" placeholderTextColor = "white"
+                                /*onChangeText={this.handleChange}*//>
+                            </View>
+                        <View style={styles.textinputcontainer}>
+                            <TextInput placeholder="password" placeholderTextColor = "white" secureTextEntry={true}/>
+                        </View>
+                    </View>
+
                     </View>
                     <View style={styles.buttonscontainer}>                  
                          <View style={styles.buttoncontainer}>
-                            <Button title="LOGIN" onPress={() => navigate('Main', {name: 'Jane'})} />
+                            <Button title="LOGIN" onPress={() => this.loadLogin()} />
                         </View>
                         <View style={styles.buttoncontainer}>
                             <Button title="REGISTER" onPress={() => navigate('Next', {name: 'Jane'})} />
                         </View>
+                    </View>
+                    <View style={styles.outputs}>
+                        <Text>OUTPUT : { msg }</Text>
                     </View>
  
                 </View>
@@ -56,6 +90,11 @@ class LoginScreen extends React.Component {
         );
     }
 }
+
+LoginScreen.propTypes = {
+    loginFetch: PropTypes.func.isRequired,
+    tokens: PropTypes.object.isRequired,
+  };
 
 const styles = StyleSheet.create({
     container: {
@@ -98,16 +137,21 @@ const styles = StyleSheet.create({
         marginLeft: 15,
         marginRight: 15,
         backgroundColor: 'white'
+    },
+    outputs: {
+        marginTop: 40
     }
 });
 
-const mapStateToProps = state => ({
-    //token: state.token,
-});
+const mapStateToProps = state => {
+    return {
+      tokens: state,
+    };
+  };
 
 
 const mapDispatchToProps = dispatch => ({
-    //getUserToken: () => dispatch(getUserToken()),
+    loginFetch: (username, password) => dispatch(getUserToken()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen);
+export default connect(mapStateToProps, {loginFetch})(LoginScreen);
