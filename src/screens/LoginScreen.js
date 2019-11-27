@@ -44,7 +44,7 @@ class LoginScreen extends React.Component {
                         <TextInput />
                     </View>
                     <View style={styles.buttoncontainer}>
-                        <Button title="LOGIN" onPress={() => navigate('Next', {name: 'Jane'})} />
+                        <Button title="LOGIN" onPress={() => navigate('Main', {name: 'Jane'})} />
                     </View>
                     <View style={styles.buttoncontainer}>
                         <Button title="REGISTER" onPress={() => navigate('Next', {name: 'Jane'})} />

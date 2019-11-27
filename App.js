@@ -7,6 +7,7 @@ import { createStore, applyMiddleware } from 'redux';
 import axiosMiddleware from 'redux-axios-middleware';
 import { Provider, connect } from 'react-redux';
 import { createStackNavigator } from 'react-navigation-stack';
+import { createAppContainer } from 'react-navigation';
 import axios from 'axios';
 
 import {
@@ -30,8 +31,9 @@ import {
 
 import LoginScreen from './src/screens/LoginScreen.js'
 import NextScreen from './src/screens/NextScreen'
+import MainScreen from './src/screens/MainScreen'
 import reducer from './src/redux/reducers/reducer';
-import { createAppContainer } from 'react-navigation';
+import Tabs from './src/navigation/TabNavigator'
 
 const client = axios.create({
   baseURL: 'localhost:9000',
@@ -40,13 +42,13 @@ const client = axios.create({
 
 const store = createStore(reducer, applyMiddleware(axiosMiddleware(client)));
 
-const Component1Shell = () => {
+/*const Component1Shell = () => {
   return <LoginScreen />;
 };
 
 const Component2Shell = () => {
   return <NextScreen />;
-};
+};*/
 
 const Stack = createStackNavigator({
   Login: {
@@ -54,6 +56,9 @@ const Stack = createStackNavigator({
   },
   Next: {
     screen: NextScreen
+  },
+  Main: {
+    screen: Tabs
   }
 });
 
