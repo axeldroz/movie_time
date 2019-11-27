@@ -29,11 +29,8 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 //import { relative } from 'path';
 
-import LoginScreen from './src/screens/LoginScreen.js'
-import NextScreen from './src/screens/NextScreen'
-import MainScreen from './src/screens/MainScreen'
 import reducer from './src/redux/reducers/reducer';
-import Tabs from './src/navigation/TabNavigator'
+import NavStack from './src/navigation/StackNavigator'
 
 const client = axios.create({
   baseURL: 'localhost:9000',
@@ -41,28 +38,6 @@ const client = axios.create({
 });
 
 const store = createStore(reducer, applyMiddleware(axiosMiddleware(client)));
-
-/*const Component1Shell = () => {
-  return <LoginScreen />;
-};
-
-const Component2Shell = () => {
-  return <NextScreen />;
-};*/
-
-const Stack = createStackNavigator({
-  Login: {
-    screen: LoginScreen
-  },
-  Next: {
-    screen: NextScreen
-  },
-  Main: {
-    screen: Tabs
-  }
-});
-
-const NavStack = createAppContainer(Stack);
 
 export default class App extends Component {
     render() {
