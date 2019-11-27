@@ -49,7 +49,8 @@ const styles = StyleSheet.create({
         //backgroundColor: 'green',
         fontSize: 30,
         paddingBottom: 10,
-        height: 30
+        height: 35,
+        fontSize: 100,
     },
     textinputplaceholder: {
         color: 'white'

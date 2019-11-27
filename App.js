@@ -29,7 +29,7 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 //import { relative } from 'path';
 
-import reducer from './src/redux/reducers/reducer';
+import reducer from './src/redux/reducers/index'; // combineReducer
 import NavStack from './src/navigation/StackNavigator'
 
 const client = axios.create({

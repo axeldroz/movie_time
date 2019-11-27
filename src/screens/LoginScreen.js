@@ -1,5 +1,5 @@
 /**
- * written by Axel Drozdzynski on November 27th
+ * Created by Axel Drozdzynski on November 27th
  */
 
 import React from 'react';
