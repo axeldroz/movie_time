@@ -19,7 +19,7 @@ import PropTypes from 'prop-types';
 //import TextInput from '../components/uikit/TextInput'
 import { whileStatement } from '@babel/types';
 import { loginFetch } from '../redux/actions/loginAction';
-import { getUserToken, saveToken } from '../redux/actions/auth/authActions'
+import { getUserToken, saveUserToken } from '../redux/actions/auth/authActions'
 import MTTextInput from '../components/MTTextInput'
 
 class LoginScreen extends React.Component {
@@ -45,8 +45,8 @@ class LoginScreen extends React.Component {
     // Fetch the token from storage then navigate to our appropriate place
     _bootstrapAsync = () => {
         console.log("DID MOUNT" + this.props.store["auth"].token);
-        const tokenSaved = this.props.store["auth"].token;
         this.props.getUserToken().then(() => {
+            const tokenSaved = this.props.store["auth"].token;
             console.log("DID MOUNT = " + tokenSaved);
             if (tokenSaved !== null)
                 this.props.navigation.navigate('Main');
@@ -75,8 +75,13 @@ class LoginScreen extends React.Component {
             var token = token = this.props.store["login"]["token"]; 
             if (token !== '' && token != 'ERROR') {
                 console.log("connected");
-                this.props.saveToken(token);
-                this.props.navigation.navigate('Main');
+                this.props.saveUserToken(token).then(() => {
+                    this.props.getUserToken().then(() => {
+                        const tokenSaved = this.props.store["auth"].token;
+                        console.log("GET = " + tokenSaved);
+                    })
+                })// we save the token
+                //this.props.navigation.navigate('Main');
             } else {
                 console.log("not connected");
             }
@@ -187,4 +192,4 @@ const mapDispatchToProps = dispatch => ({
     loginFetch: (username, password) => dispatch(getUserToken()),
 });
 
-export default connect(mapStateToProps, {loginFetch, getUserToken, saveToken})(LoginScreen);
+export default connect(mapStateToProps, {loginFetch, getUserToken, saveUserToken})(LoginScreen);

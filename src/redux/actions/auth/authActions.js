@@ -49,22 +49,22 @@ export const getUserToken = () => dispatch =>
 export const saveUserToken = (data) => dispatch =>
     AsyncStorage.setItem('userToken', data)
         .then((data) => {
-            dispatch(loading(false));
+            dispatch(loadingToken(false));
             dispatch(saveToken(data));
         })
         .catch((err) => {
-            dispatch(loading(false));
+            dispatch(loadingToken(false));
             dispatch(error(err.message || 'ERROR'));
         })
 
 export const removeUserToken = () => dispatch =>
     AsyncStorage.removeItem('userToken')
         .then((data) => {
-            dispatch(loading(false));
+            dispatch(loadingToken(false));
             dispatch(removeToken(data));
         })
         .catch((err) => {
-            dispatch(loading(false));
+            dispatch(loadingToken(false));
             dispatch(error(err.message || 'ERROR'));
         })
 
