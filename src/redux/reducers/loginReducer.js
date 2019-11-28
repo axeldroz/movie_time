@@ -14,11 +14,13 @@ const initialState = {
 export default function reducer(state = initialState, action) {
   switch (action.type) {
     case LOGIN_REQUEST:
+        console.log("Request = Refresh");
         console.log("Request");
       return {
         ...state,
         loading: true,
-        message: 'loading'
+        message: 'loading',
+        error: '',
       };
     case LOGIN_SUCCESS:
       console.log("success");
@@ -37,6 +39,7 @@ export default function reducer(state = initialState, action) {
         ...state,
         loading: false,
         error: 'Error while signing in',
+        token: 'ERROR',
         message: 'error'
       };
     default:

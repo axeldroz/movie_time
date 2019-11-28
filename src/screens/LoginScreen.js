@@ -29,12 +29,12 @@ class LoginScreen extends React.Component {
     constructor() {
         super();
 
-        /*this.state = {
+        this.state = {
             token: '',
             username: 'YO',
             password: ''
         }
-        this.handleChange= this.handleChange.bind(this);*/
+        //this.handleChange= this.handleChange.bind(this);
     }
 
     componentDidMount() {
@@ -48,15 +48,21 @@ class LoginScreen extends React.Component {
         //this.state.username = value;
     }
 
-    loadLogin() {
-        this.props.loginFetch("test1@mail.com", "password33")
+    loadLogin(username, password) {
+        //console.log("YO!!!!!!!!!!!!!");
+        console.log(( "username=" + username + ", password=" + password ) );
+        //username = "axeldroz@movietime.com";
+        //password = "password33";
+        username = username.toLowerCase();
+        this.props.loginFetch(username, password);
     }
 
     render() {
         const {navigate} = this.props.navigation;
         const token = this.props.tokens["login"]["token"];
         const msg = this.props.tokens["login"]["message"];
-        console.log("MESSAGE : ", this.props.tokens);
+        const err = this.props.tokens["login"];
+        console.log("MESSAGE : ", token);
         return (
             <View style={styles.container}>
                 <View style={styles.logincontainer}>
@@ -64,25 +70,26 @@ class LoginScreen extends React.Component {
                     <View style={styles.formcontainer}>
                         <View style={styles.formcontainer}>  
                             <View style={styles.textinputcontainer}>
-                                <TextInput /*ref= {(el) => { this.state.username = el; }}*/ placeholder="username" placeholderTextColor = "white"
-                                /*onChangeText={this.handleChange}*//>
+                                <TextInput placeholder="username" placeholderTextColor = "white"
+                                onChangeText={(text) => this.setState( { username: text } )} />
                             </View>
                         <View style={styles.textinputcontainer}>
-                            <TextInput placeholder="password" placeholderTextColor = "white" secureTextEntry={true}/>
+                            <TextInput placeholder="password" placeholderTextColor = "white" secureTextEntry={true}
+                            onChangeText={(text) => this.setState( { password: text } )}/>
                         </View>
                     </View>
 
                     </View>
                     <View style={styles.buttonscontainer}>                  
                          <View style={styles.buttoncontainer}>
-                            <Button title="LOGIN" onPress={() => this.loadLogin()} />
+                            <Button title="LOGIN" onPress={() => this.loadLogin(this.state.username, this.state.password)} />
                         </View>
                         <View style={styles.buttoncontainer}>
                             <Button title="REGISTER" onPress={() => navigate('Next', {name: 'Jane'})} />
                         </View>
                     </View>
                     <View style={styles.outputs}>
-                        <Text>OUTPUT : { msg }</Text>
+                        <Text>OUTPUT : { "login : " + this.state.username + " password : " + this.state.password }</Text>
                     </View>
  
                 </View>

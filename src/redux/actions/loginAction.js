@@ -25,7 +25,7 @@ export const loginFailure = error => ({
   
 export const loginFetch = (username, password) => {
     console.log('ok');
-
+    console.log(( "CHECK2: username=" + username + ", password=" + password ) );
     const options = {
         method: 'POST',
         headers: {
@@ -49,7 +49,8 @@ export const loginFetch = (username, password) => {
         let json = await response.json();
         const str = JSON.stringify(json);
         //console.error('json' + str);
-        console.log(json)
+        //var str = JSON.stringify(json, null, 2);
+        console.log("json=" + str);
         dispatch(loginSuccess(json));
       } catch (error) {
         dispatch(loginFailure(error));
