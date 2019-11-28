@@ -48,7 +48,8 @@ class LoginScreen extends React.Component {
         const tokenSaved = this.props.store["auth"].token;
         this.props.getUserToken().then(() => {
             console.log("DID MOUNT = " + tokenSaved);
-            this.props.navigation.navigate(tokenSaved !== null ? 'Main' : 'Login');
+            if (tokenSaved !== null)
+                this.props.navigation.navigate('Main');
         })
             .catch(error => {
                 console.log("ERROR" + error);
@@ -70,7 +71,15 @@ class LoginScreen extends React.Component {
         //username = "axeldroz@movietime.com";
         //password = "password33";
         username = username.toLowerCase();
-        this.props.loginFetch(username, password);
+        this.props.loginFetch(username, password).then(() => {
+            var token = token = this.props.store["login"]["token"]; 
+            if (token !== '' && token != 'ERROR') {
+                console.log("connected");
+                this.props.navigation.navigate('Main');
+            } else {
+                console.log("not connected");
+            }
+        })
     }
 
     render() {
@@ -105,7 +114,7 @@ class LoginScreen extends React.Component {
                         </View>
                     </View>
                     <View style={styles.outputs}>
-                        <Text>OUTPUT : { "login : " + this.state.username + " password : " + this.state.password }</Text>
+                        <Text>OUTPUT : { "login : " + this.state.username + " password : " + this.state.password + '\nToken =' + token}</Text>
                     </View>
  
                 </View>

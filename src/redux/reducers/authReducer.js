@@ -7,7 +7,7 @@ import {
 } from '../actions/types.js';
 
 export default AuthReducer = (state = {
-    token: {},
+    token: null,
     loading: true,
     error: null,
 }, action) => {
