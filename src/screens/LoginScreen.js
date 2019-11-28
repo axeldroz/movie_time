@@ -88,7 +88,12 @@ class LoginScreen extends React.Component {
             }
         })
     }
-
+    /*
+                            <View style={styles.textinputcontainer}>
+                            <TextInput placeholder="password" placeholderTextColor = "white" secureTextEntry={true}
+                            onChangeText={(text) => this.setState( { password: text } )}/>
+                        </View>
+                        */
     render() {
         const {navigate} = this.props.navigation;
         const token = this.props.store["login"]["token"];
@@ -100,16 +105,15 @@ class LoginScreen extends React.Component {
                 <View style={styles.logincontainer}>
                     <Text style={styles.title}>Get Started !!</Text>
                     <View style={styles.formcontainer}>
-                        <View style={styles.formcontainer}>  
-                            <View style={styles.textinputcontainer}>
-                                <TextInput placeholder="username" placeholderTextColor = "white"
-                                onChangeText={(text) => this.setState( { username: text } )} />
-                            </View>
-                        <View style={styles.textinputcontainer}>
-                            <TextInput placeholder="password" placeholderTextColor = "white" secureTextEntry={true}
-                            onChangeText={(text) => this.setState( { password: text } )}/>
+                        <View style={styles.formcontainer}>
+                        
+                            <MTTextInput placeholder="username"
+                                    onChangeText={(text) => this.setState( { username: text } )} />
+                            
+                            <MTTextInput placeholder="password" 
+                                     secureTextEntry={true} 
+                                     onChangeText={(text) => this.setState( { password: text } )}/>
                         </View>
-                    </View>
 
                     </View>
                     <View style={styles.buttonscontainer}>                  

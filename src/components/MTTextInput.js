@@ -2,7 +2,8 @@
  * written by Axel Drozdzynski on November 27th
  */
 
-import React from 'react';
+import React, { Component } from 'react';
+
 import {
     ActivityIndicator,
     AsyncStorage,
@@ -11,33 +12,56 @@ import {
     View,
     Text,
     Button,
-    TextInput
+    TextInput,
+    Platform
 } from 'react-native';
+
+import PropTypes from 'prop-types';
 
 //import TextInput from '../components/uikit/TextInput'
 import { whileStatement } from '@babel/types';
 //import { getUserToken } from '../authActions';
 
-const MTTextInput = ({
-    type,
-    dark,
-    style,
-    placeholderTextColor,
-    ...restProps
-  }) => {
-    return (
-            <View style={styles.container}>
-                <View style={styles.formcontainer}>  
-                    <View style={styles.textinputcontainer}>
-                        <TextInput placeholder="login" placeholderTextColor = "white"/>
-                    </View>
-                    <View style={styles.textinputcontainer}>
-                        <TextInput placeholder="password" placeholderTextColor = "white" secureTextEntry={true}/>
-                    </View>
-                </View>
+import { TextField } from 'react-native-material-textfield';
+
+const Colors = {
+    brandText: '#fff',
+    placeHolderText: '#000',
+    brandSecondaryText: '#000'
+  }
+
+class MTTextInput extends Component {
+    static propTypes = {
+        containerStyle: PropTypes.style,
+        style: PropTypes.style,
+        autoFocus: PropTypes.bool,
+        editbale: PropTypes.bool,
+        textColor: PropTypes.string,
+        onChangeText: PropTypes.func,
+        value: PropTypes.string,
+        placeholder: PropTypes.string,
+        secureTextEntry: PropTypes,
+        onChangeText: PropTypes.func,
+      }
+
+  render() {
+      return(
+        <View style={styles.container}>
+        <View style={styles.formcontainer}>  
+            <View style={styles.textinputcontainer}>
+                <TextInput 
+                    style={styles.textinput} 
+                    placeholder={ (this.props.placeholder != undefined) ? this.props.placeholder : 'undefined'} 
+                    placeholderTextColor = "white"
+                    secureTextEntry={this.props.secureTextEntry}
+                    onChangeText={this.props.onChangeText}
+                />
             </View>
-        );
-    }
+        </View>
+    </View>
+      )
+  }
+}
 
 const styles = StyleSheet.create({
     textinputcontainer: {
@@ -46,15 +70,21 @@ const styles = StyleSheet.create({
         marginTop: 15,
         borderWidth: 1,
         borderRadius: 5,
-        //backgroundColor: 'green',
+        backgroundColor: 'green',
         fontSize: 30,
         paddingBottom: 10,
-        height: 35,
+        height: 55,
         fontSize: 100,
     },
     textinputplaceholder: {
         color: 'white'
     },
+    textinput: {
+        fontSize: 20,
+        color: 'black',
+        paddingLeft: 20,
+        paddingTop: 15,
+    }
 });
 
 export default MTTextInput;
