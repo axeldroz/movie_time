@@ -18,13 +18,13 @@ import PropTypes from 'prop-types';
 
 //import TextInput from '../components/uikit/TextInput'
 import { whileStatement } from '@babel/types';
-import { loginFetch } from '../redux/actions/loginAction';
+import { registerFetch } from '../redux/actions/registerActions';
 import { getUserToken, saveUserToken } from '../redux/actions/auth/authActions'
 import MTTextInput from '../components/MTTextInput'
 
-class LoginScreen extends React.Component {
+class RegisterScreen extends React.Component {
     static navigationOptions = {
-        title: 'Login',
+        title: 'Register',
     };
 
     constructor() {
@@ -65,17 +65,13 @@ class LoginScreen extends React.Component {
         //this.state.username = value;
     }
 
-    goTo(screenName) {
-        this.props.navigation.navigate(screenName);
-    }
-
-    loadLogin(username, password) {
+    loadAction(username, password) {
         //console.log("YO!!!!!!!!!!!!!");
         console.log(( "username=" + username + ", password=" + password ) );
         //username = "axeldroz@movietime.com";
         //password = "password33";
         username = username.toLowerCase();
-        this.props.loginFetch(username, password).then(() => {
+        this.props.registerFetch(username, password).then(() => {
             var token = token = this.props.store["login"]["token"]; 
             if (token !== '' && token != 'ERROR') {
                 console.log("connected");
@@ -107,7 +103,7 @@ class LoginScreen extends React.Component {
         return (
             <View style={styles.container}>
                 <View style={styles.logincontainer}>
-                    <Text style={styles.title}>Get Started !!</Text>
+                    <Text style={styles.title}>Register Right Now !!</Text>
                     <View style={styles.formcontainer}>
                         <View style={styles.formcontainer}>
                         
@@ -122,14 +118,12 @@ class LoginScreen extends React.Component {
                     </View>
                     <View style={styles.buttonscontainer}>                  
                          <View style={styles.buttoncontainer}>
-                            <Button title="LOGIN" onPress={() => this.loadLogin(this.state.username, this.state.password)} />
-                        </View>
-                        <View style={styles.buttoncontainer}>
-                            <Button title="REGISTER" onPress={() => this.goTo('Register')} />
+                            <Button title="Register" onPress={() => this.loadAction(this.state.username, this.state.password)} />
                         </View>
                     </View>
                     <View style={styles.outputs}>
                         <Text>OUTPUT : { "login : " + this.state.username + " password : " + this.state.password + '\nToken =' + token}</Text>
+                        <Text>MESSAGE :  {msg }</Text>
                     </View>
  
                 </View>
@@ -138,7 +132,7 @@ class LoginScreen extends React.Component {
     }
 }
 
-LoginScreen.propTypes = {
+RegisterScreen.propTypes = {
     loginFetch: PropTypes.func.isRequired,
     store: PropTypes.object.isRequired,
   };
@@ -201,4 +195,4 @@ const mapDispatchToProps = dispatch => ({
     loginFetch: (username, password) => dispatch(getUserToken()),
 });
 
-export default connect(mapStateToProps, {loginFetch, getUserToken, saveUserToken})(LoginScreen);
+export default connect(mapStateToProps, {registerFetch, saveUserToken})(RegisterScreen);

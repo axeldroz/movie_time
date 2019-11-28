@@ -10,12 +10,13 @@ import FeedScreen from '../screens/FeedScreen'
 import LoginScreen from '../screens/LoginScreen';
 import AuthLoading from '../screens/AuthLoadingScreen'
 import Tabs from './TabNavigator';
+import RegisterStack from './RegisterStackNavigator'
 
 const SwitchNav = createSwitchNavigator(
     {
         AuthLoading: AuthLoading,
         SignedIn: Tabs,
-        SignedOut: LoginScreen,
+        SignedOut: RegisterStack,
     },
     {
         initialRouteName: 'AuthLoading',
