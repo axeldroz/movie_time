@@ -39,7 +39,7 @@ class LoginScreen extends React.Component {
     }
 
     componentDidMount() {
-        this._bootstrapAsync();
+        //this._bootstrapAsync();
     }
 
     // Fetch the token from storage then navigate to our appropriate place
@@ -49,7 +49,7 @@ class LoginScreen extends React.Component {
             const tokenSaved = this.props.store["auth"].token;
             console.log("DID MOUNT = " + tokenSaved);
             if (tokenSaved !== null)
-                this.props.navigation.navigate('Main');
+                this.props.navigation.navigate('SignedIn');
         })
             .catch(error => {
                 console.log("ERROR" + error);
@@ -79,6 +79,7 @@ class LoginScreen extends React.Component {
                     this.props.getUserToken().then(() => {
                         const tokenSaved = this.props.store["auth"].token;
                         console.log("GET = " + tokenSaved);
+                        this.props.navigation.navigate('SignedIn');
                     })
                 })// we save the token
                 //this.props.navigation.navigate('Main');

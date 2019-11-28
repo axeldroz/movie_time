@@ -12,6 +12,8 @@ import {
     Button
 } from 'react-native';
 
+import { removeUserToken } from '../redux/actions/auth/authActions'
+
 class ProfileScreen extends Component {
   static navigationOptions = {
     title: 'ProfileScreen'
@@ -19,14 +21,19 @@ class ProfileScreen extends Component {
   componentDidMount() {
   }
 
-
+  logout() {
+    this.props.removeUserToken().then(() => {
+      this.props.navigation.navigate('SignedOut');
+    });
+  }
 
   render() {
     var token = token = this.props.store["login"]["token"]; 
     return (
       <View>
           <Text>Profile View !!!</Text>
-    <Text>Here is the token : {token}</Text>
+          <Text>Here is the token : {token}</Text>
+          <Button title="LOG OUT" onPress={ () => this.logout() }></Button>
       </View>
     );
   }
@@ -38,7 +45,4 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = {
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(ProfileScreen);
+export default connect(mapStateToProps, {removeUserToken})(ProfileScreen);

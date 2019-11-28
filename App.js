@@ -33,6 +33,7 @@ import {
 
 import reducer from './src/redux/reducers/index'; // combineReducer
 import NavStack from './src/navigation/StackNavigator'
+import SwitchNav from './src/navigation/SwitchNavigator'
 
 /*const client = axios.create({
   baseURL: 'http://localhost:3000/',
@@ -48,7 +49,7 @@ export default class App extends Component {
         return (
         <Provider store={store}>
             <View style={styles.container}>
-              <NavStack />
+              <SwitchNav />
             </View>
         </Provider>
         );
