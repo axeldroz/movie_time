@@ -10,6 +10,7 @@ import { createStackNavigator } from 'react-navigation-stack';
 import { createAppContainer } from 'react-navigation';
 import axios from 'axios';
 import thunk from 'redux-thunk';
+import MyProvider from './src/redux/providers/provider';
 
 import {
   SafeAreaView,
@@ -40,10 +41,12 @@ import NavStack from './src/navigation/StackNavigator'
 
 const store = createStore(reducer, applyMiddleware(thunk));
 
+//        <Provider store={store}>
+
 export default class App extends Component {
     render() {
         return (
-          <Provider store={store}>
+        <Provider store={store}>
             <View style={styles.container}>
               <NavStack />
             </View>

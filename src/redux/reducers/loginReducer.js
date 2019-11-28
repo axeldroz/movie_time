@@ -46,14 +46,3 @@ export default function reducer(state = initialState, action) {
       return state;
   }
 }
-
-export function login(login, password) {
-  return {
-    type: LOGIN_REQUEST,
-    payload: {
-        request: {
-            url: `/api/v1/users/login`,
-            },
-        },
-    };
-}

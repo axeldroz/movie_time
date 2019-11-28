@@ -19,6 +19,7 @@ import PropTypes from 'prop-types';
 //import TextInput from '../components/uikit/TextInput'
 import { whileStatement } from '@babel/types';
 import { loginFetch } from '../redux/actions/loginAction';
+import { getUserToken } from '../redux/actions/auth/authActions'
 import MTTextInput from '../components/MTTextInput'
 
 class LoginScreen extends React.Component {
@@ -38,8 +39,23 @@ class LoginScreen extends React.Component {
     }
 
     componentDidMount() {
-
+        this._bootstrapAsync();
     }
+
+    // Fetch the token from storage then navigate to our appropriate place
+    _bootstrapAsync = () => {
+        console.log("DID MOUNT" + this.props.store["auth"].token);
+        const tokenSaved = this.props.store["auth"].token;
+        this.props.getUserToken().then(() => {
+            console.log("DID MOUNT = " + tokenSaved);
+            this.props.navigation.navigate(tokenSaved !== null ? 'Main' : 'Login');
+        })
+            .catch(error => {
+                console.log("ERROR" + error);
+                this.setState({ error })
+            })
+
+    };    
 
     handleChange(event = {}) {
         const name = event.target && event.target.name;
@@ -59,9 +75,9 @@ class LoginScreen extends React.Component {
 
     render() {
         const {navigate} = this.props.navigation;
-        const token = this.props.tokens["login"]["token"];
-        const msg = this.props.tokens["login"]["message"];
-        const err = this.props.tokens["login"];
+        const token = this.props.store["login"]["token"];
+        const msg = this.props.store["login"]["message"];
+        const err = this.props.store["login"];
         console.log("MESSAGE : ", token);
         return (
             <View style={styles.container}>
@@ -100,7 +116,7 @@ class LoginScreen extends React.Component {
 
 LoginScreen.propTypes = {
     loginFetch: PropTypes.func.isRequired,
-    tokens: PropTypes.object.isRequired,
+    store: PropTypes.object.isRequired,
   };
 
 const styles = StyleSheet.create({
@@ -152,7 +168,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
     return {
-      tokens: state,
+      store: state,
     };
   };
 
@@ -161,4 +177,4 @@ const mapDispatchToProps = dispatch => ({
     loginFetch: (username, password) => dispatch(getUserToken()),
 });
 
-export default connect(mapStateToProps, {loginFetch})(LoginScreen);
+export default connect(mapStateToProps, {loginFetch, getUserToken})(LoginScreen);

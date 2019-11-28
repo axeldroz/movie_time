@@ -8,6 +8,9 @@ import { createAppContainer } from 'react-navigation';
 import ProfileScreen from '../screens/ProfileScreen'
 import FeedScreen from '../screens/FeedScreen'
 
+/**
+ * It's the SignedIn view
+ */
 const Tabs = createBottomTabNavigator({
     Feed: {
       screen: FeedScreen
@@ -17,4 +20,4 @@ const Tabs = createBottomTabNavigator({
       },
   });
 
-  export default createAppContainer(Tabs);
+export default createAppContainer(Tabs);
