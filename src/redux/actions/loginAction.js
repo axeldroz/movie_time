@@ -52,6 +52,7 @@ export const loginFetch = (username, password) => {
         //var str = JSON.stringify(json, null, 2);
         console.log("json=" + str);
         dispatch(loginSuccess(json));
+        
       } catch (error) {
         dispatch(loginFailure(error));
       }

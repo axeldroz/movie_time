@@ -18,18 +18,25 @@ class ProfileScreen extends Component {
   };
   componentDidMount() {
   }
-  render() {
 
+
+
+  render() {
+    var token = token = this.props.store["login"]["token"]; 
     return (
       <View>
           <Text>Profile View !!!</Text>
+    <Text>Here is the token : {token}</Text>
       </View>
     );
   }
 }
 
-const mapStateToProps = () => ({
-});
+const mapStateToProps = state => {
+  return {
+    store: state,
+  };
+};
 
 const mapDispatchToProps = {
 };
