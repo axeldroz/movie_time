@@ -22,3 +22,8 @@ export const SAVE_STORE_TOKEN="SAVE_STORE_TOKEN";
 export const REMOVE_STORE_TOKEN="REMOVE_STORE_TOKEN";
 export const LOADING_STORE_TOKEN="LOADING_STORE_TOKEN";
 export const ERROR_STORE_TOKEN="ERROR_STORE_TOKEN";
+
+/**
+ * Main views
+ */
+
