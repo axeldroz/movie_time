@@ -5,21 +5,25 @@
  */
 
 import {
-    REGISTER_REQUEST,
-    REGISTER_SUCCESS,
-    REGISTER_FAILURE,
+    GET_USER_INFO_REQUEST,
+    GET_USER_INFO_SUCCESS,
+    GET_USER_INFO_FAILURE,
   } from '../actions/types';
 
 // Initial state
 const initialState = {
   isLoading: false,
-  token: '',
+  username: '',
+  created_date: '',
+  created_date: '',
+  email: '',
+  id: 0,
   message: 'loading'
 };
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
-    case REGISTER_REQUEST:
+    case GET_USER_INFO_REQUEST:
         console.log("Request = Refresh");
         console.log("Request");
       return {
@@ -28,18 +32,22 @@ export default function reducer(state = initialState, action) {
         message: 'loading',
         error: '',
       };
-    case REGISTER_SUCCESS:
+    case GET_USER_INFO_SUCCESS:
       console.log("success");
-      const {results} = action.payload.token;
-      console.log("RESULT:", action.payload.token);
+      const {results} = action.payload;
+      console.log("RESULT:", (action.payload.infos));
       return {
         ...state,
         isLoading: false,
-        token: action.payload.token,
-        message: 'Success, here is your token : ' + action.payload.token,
+        message: 'Success, here is your token : ' + action.payload.message,
         error: '',
+        username: action.payload.infos.username,
+        email: action.payload.infos.email,
+        id: action.payload.infos.id,
+        created_date: action.payload.infos.created_date,
+        created_date: action.payload.infos.created_date
       };
-    case REGISTER_FAILURE:
+    case GET_USER_INFO_FAILURE:
         console.log("Fail");
       return {
         ...state,

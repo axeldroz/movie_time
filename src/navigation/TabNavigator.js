@@ -7,6 +7,7 @@ import { createAppContainer } from 'react-navigation';
 
 import ProfileScreen from '../screens/ProfileScreen'
 import FeedScreen from '../screens/FeedScreen'
+import ProfileStack from './ProfileStackNavigator'
 
 /**
  * It's the SignedIn view
@@ -16,7 +17,7 @@ const Tabs = createBottomTabNavigator({
       screen: FeedScreen
     },
     Profile: {
-        screen: ProfileScreen
+        screen: ProfileStack
       },
   });
 
