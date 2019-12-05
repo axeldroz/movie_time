@@ -43,7 +43,8 @@ export const loginFetch = (username, password) => {
       try {
         console.log('ok');
         let response = await fetch(
-          'http://localhost:3000/api/v1/users/login',
+          'http://10.0.2.2:3000/api/v1/users/login',
+        //'http://localhost:3000/api/v1/users/me' // for iOS
           options
         );
         let json = await response.json();
@@ -54,6 +55,7 @@ export const loginFetch = (username, password) => {
         dispatch(loginSuccess(json));
         
       } catch (error) {
+        console.log("error loginFetch: " + error)
         dispatch(loginFailure(error));
       }
     };

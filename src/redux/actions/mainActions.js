@@ -44,7 +44,8 @@ export const userInfoFetch = (token) => {
         try {
             console.log('Ok dispatch');
             let response = await fetch(
-            'http://localhost:3000/api/v1/users/me',
+            'http://10.0.2.2:3000/api/v1/users/me',
+            //'http://localhost:3000/api/v1/users/me' // for iOS
             options
             );
             let json = await response.json();
