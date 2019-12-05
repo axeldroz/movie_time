@@ -10,6 +10,7 @@ import {
     ActivityIndicator,
     AsyncStorage,
     StatusBar,
+    Image,
     StyleSheet,
     View,
     Text,
@@ -67,12 +68,44 @@ class ProfileScreen extends Component {
 
     return (
       <View style={styles.container}>
-          <Text>Profile View !!!</Text>
-          <Text>Here is the token : {}</Text>
-          <Button title="LOG OUT" onPress={ () => this.logout() }></Button>
-          <Button title="EDIT PROFILE" onPress={ () => this.goTo('EditProfileView') }></Button>
-          <Text>Username : { username }</Text>
-          <Text>Created date : { created_date }</Text>
+          <View style={styles.imageAndButtonContainer1}>
+            <View style={styles.imageAndButtonContainer2}>            
+                <View style={styles.logoutButtonContainer}>
+                  <Button title="LOG OUT" 
+                          onPress={ () => this.logout() }
+                          style={styles.logoutButton}></Button>
+                </View>
+            
+                <View style={styles.imageContainer}>
+                  <Image
+                    source={{uri :'https://avatars2.githubusercontent.com/u/20972154?s=460&v=4'} }
+                    style={styles.profileImage}
+                  >
+                  </Image>
+                </View>
+
+                <View style={styles.editProfileButtonContainer} >
+                  <Button title="EDIT PROFILE" 
+                    onPress={ () => this.goTo('EditProfileView') }
+                    style={styles.editProfileButton}
+                  ></Button>
+            </View>
+            </View>
+          </View>
+          <View style={styles.userInfoContainer}>
+            <View style={styles.infoContainer}>
+              <Text style={styles.infoTitle}>Username</Text>
+              <Text style={styles.infoText}>{ username }</Text>
+            </View>
+            <View style={styles.infoContainer}>
+              <Text style={styles.infoTitle}>Created date</Text>
+              <Text style={styles.infoText}>{ created_date }</Text>
+            </View>
+            <View style={styles.infoContainer}>
+              <Text style={styles.infoTitle}>Your Movies</Text>
+              <Text style={styles.infoText}>{ created_date }</Text>
+            </View>
+          </View>
       </View>
     );
   }
@@ -82,10 +115,73 @@ const styles = StyleSheet.create({
   container: {
       flex: 1,
       backgroundColor: 'white',
-      marginTop: 100,
+      marginTop: 20,
       marginLeft: 0,
       marginRight: 0,
   },
+  imageAndButtonContainer1: {
+    //backgroundColor: "blue",
+    flexDirection: "column",
+    alignItems: "center",
+  },
+  imageAndButtonContainer2: {
+    flexDirection: "row",
+    //backgroundColor: "red",
+  },
+  imageContainer: {
+    flex: 2,
+    //backgroundColor: 'yellow',
+    alignItems: "center",
+  },
+  logoutButtonContainer: {
+    flex: 2,
+    //backgroundColor: 'orange',
+    marginTop: 20,
+    marginLeft: 0,
+    paddingLeft: 0,
+    width: 120,
+  },
+  editProfileButtonContainer: {
+    flex: 2,
+    //backgroundColor: 'orange',
+    marginTop: 20,
+    width: 120,
+  },
+  profileImage: {
+    marginTop: 0,
+    width: 120, 
+    height: 120,
+    borderRadius: 60,
+    borderColor: 'black',
+    borderWidth: 0.5,
+
+  },
+  logoutButton: {
+    marginTop: 50,
+    marginLeft: 20,
+    //backgroundColor: "blue"
+  },
+  editProfileButton: {
+    marginTop: 50,
+    //backgroundColor: "blue"
+  },
+  userInfoContainer: {
+    marginTop: 20,
+    paddingLeft: 15,
+    paddingRight: 15,
+    //backgroundColor: "red",
+  },
+  infoContainer: {
+    marginTop: 25,
+  },
+  infoTitle: {
+    fontSize: 20,
+  },
+  infoText: {
+    marginTop: 5,
+    fontSize: 18,
+  }
+
 });
 
 const mapStateToProps = state => {
