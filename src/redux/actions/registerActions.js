@@ -1,4 +1,5 @@
 import {
+    URL_BASE,
     REGISTER_REQUEST,
     REGISTER_SUCCESS,
     REGISTER_FAILURE,
@@ -40,7 +41,7 @@ export const registerFetch = (username, password) => {
       try {
         console.log('ok');
         let response = await fetch(
-          'http://localhost:3000/api/v1/users/',
+          URL_BASE + '/api/v1/users/',
           options
         );
         let json = await response.json();

@@ -2,6 +2,7 @@
 import axios from 'axios';
 
 import {
+    URL_BASE,
     LOGIN_REQUEST,
     LOGIN_SUCCESS,
     LOGIN_FAILURE,
@@ -43,8 +44,7 @@ export const loginFetch = (username, password) => {
       try {
         console.log('ok');
         let response = await fetch(
-          'http://10.0.2.2:3000/api/v1/users/login',
-        //'http://localhost:3000/api/v1/users/me' // for iOS
+          URL_BASE + '/users/login',
           options
         );
         let json = await response.json();

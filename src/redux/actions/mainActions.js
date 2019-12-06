@@ -1,4 +1,5 @@
 import {
+    URL_BASE,
     GET_USER_INFO_REQUEST,
     GET_USER_INFO_SUCCESS,
     GET_USER_INFO_FAILURE,
@@ -44,7 +45,7 @@ export const userInfoFetch = (token) => {
         try {
             console.log('Ok dispatch');
             let response = await fetch(
-            'http://10.0.2.2:3000/api/v1/users/me',
+            URL_BASE + '/users/me',
             //'http://localhost:3000/api/v1/users/me' // for iOS
             options
             );

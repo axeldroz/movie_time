@@ -1,3 +1,7 @@
+import { Platform } from 'react-native';
+
+export const URL_BASE = (Platform.OS === 'ios') ? 'http://localhost:3000/api/v1' : 'http://10.0.2.2:3000/api/v1';
+
 export const GET_TOKEN = 'GET_TOKEN';
 export const SAVE_TOKEN = 'SAVE_TOKEN';
 export const REMOVE_TOKEN = 'REMOVE_TOKEN';
