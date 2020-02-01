@@ -24,7 +24,7 @@ import ImagePicker from 'react-native-image-picker'
 import MTTextInput from '../components/MTTextInput';
 import MTImagePickerButton from '../components/MTImagePickerButton';
 
-import { removeUserToken, getUserToken } from '../redux/actions/auth/authActions';
+import { getUserToken } from '../redux/actions/auth/authActions';
 import { refreshImage, uploadImageFetch } from '../redux/actions/mainActions'
 
 let deviceWidth = Dimensions.get('window').width;
@@ -48,12 +48,6 @@ class EditProfileScreen extends Component {
   componentDidMount() {
     console.log("store: ", this.props.store['main']);
     this.fetchUserInfo()
-  }
-
-  logout() {
-    this.props.removeUserToken().then(() => {
-      this.props.navigation.navigate('SignedOut');
-    });
   }
 
   fetchUserInfo() {
