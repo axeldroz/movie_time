@@ -3,7 +3,6 @@
  */
 
 import React, { Component } from 'react';
-//import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
 import {
     ActivityIndicator,
@@ -16,33 +15,30 @@ import {
     Dimensions,
     Image,
 } from 'react-native';
-
-import ImagePicker from 'react-native-image-picker'
-//var ImagePicker = require('react-native-image-picker');
-//import * as ImagePicker from 'react-native-image-picker';
+import ImagePicker from 'react-native-image-picker';
 
 import MTTextInput from '../components/MTTextInput';
-import MTImagePickerButton from '../components/MTImagePickerButton';
-
 import { getUserToken } from '../redux/actions/auth/authActions';
-import { refreshImage, uploadImageFetch } from '../redux/actions/mainActions'
+import { refreshImage, uploadImageFetch, updateUserInfoFetch } from '../redux/actions/mainActions'
 
 let deviceWidth = Dimensions.get('window').width;
 
 class EditProfileScreen extends Component {
   static navigationOptions = {
-    title: 'ProfileScreen'
-  };
-
-  state = {
-    avatarSource: null,
-    videoSource: null
+    title: 'Edit Profile'
   };
 
   constructor() {
     super();
 
     this.imagePick = ImagePicker;
+    this.state = {
+      avatarSource: null,
+      videoSource: null,
+      username: '',
+      bio: '',
+      name: ''
+  }
   }
 
   componentDidMount() {
@@ -106,32 +102,15 @@ class EditProfileScreen extends Component {
         }
         else {
           var source, temp;
-          // You can display the image using either:
-          //source = {uri: 'data:image/jpeg;base64,' + response.data, isStatic: true};
-      
+
           temp = response.data;
-      
-          //Or:
           if (Platform.OS === 'android') {
             source = {uri: response.uri, isStatic: true};
           } else {
             source = {uri: response.uri.replace('file://', ''), isStatic: true};
           }
-
-          //self.state.avatarSource = source;
-          //self.state.base64 = temp;
-          //self.state.profilePictureUri = source;
-          //self.props.store['main']['avatarSource'] = source;
-          //self.props.store['main']['profilePictureUri'] = source;
-          //self.props.store['main']['base64'] = temp;
-          //self.props.store['main']['profilePictureUri'] = source;
-          //self.setState( {profilePictureUri : source });
-          /*this.setState({
-            avatarSource: "ok"
-          });*/
           console.log("source = ", source)
           this.receiveImage(source, temp, response.type, response.fileName);
-          
           //console.log("avatarSource", source);
           //console.log("base64", temp);
         }
@@ -152,6 +131,7 @@ send() {
       const type_ = this.props.store['main']['profilePictureType'];
       const filename = this.props.store['main']['profilePictureFilename'];
       console.log("token=", token, "base64");
+      console.log("filename", this.props.store['main'])
       var data = {
         uri: uri,
         type: type_,
@@ -162,12 +142,28 @@ send() {
   })
 }
 
+sendUpdateInfo(token) {
+  console.log("token:", token);
+  var username = this.props.store['main']['username'];
+  var bio = this.props.store['main']['bio'];
+
+  username = (this.state.username != '') ? this.state.username : username;
+  bio = (this.state.bio != '') ? this.state.bio : bio;
+  data = {
+    username: username,
+    bio: bio
+  }
+  this.props.updateUserInfoFetch(token, data);
+}
+
   render() {
-    var token = this.props.store["login"]["token"]; 
+    var token = this.props.store["auth"].token;
     const imageUri = (this.props.store['main']['profilePictureUri'] != '' && this.props.store['main']['profilePictureUri'] != undefined) 
     ? this.props.store['main']['profilePictureUri'] : 'https://avatars2.githubusercontent.com/u/20972154?s=460&v=4';
     const username = this.props.store['main']['username'];
+    const bio = this.props.store['main']['bio'];
     console.log("username : ", username);
+    console.log("Token : ", token);
  //console.log("===> imageUri = ", imageUri)
  //   console.log("imagePRops:", this.props.store['main'])
     return (
@@ -198,17 +194,18 @@ send() {
             
           <View style={styles.userInfos}>
             <MTTextInput placeholder="username"
-                        onChangeText={console.log("ok")}
+                        onChangeText={(text) => this.setState( { username: text } )}
                         style={styles.textField}
-                        value={ username } />
+                        defaultValue={ username } />
             
             <MTTextInput placeholder="name"
-                        onChangeText={console.log("ok")}
+                        onChangeText={(text) => this.setState( { name: text } )}
                         style={styles.textField} />
             
             <MTTextInput placeholder="bio"
-                        onChangeText={console.log("ok")}
-                        style={styles.textField} />
+                        onChangeText={(text) => this.setState( { bio: text } )}
+                        style={styles.textField}
+                        defaultValue={ bio } />
           </View>
 
           <View style={styles.line1}>
@@ -216,11 +213,11 @@ send() {
           </View>
 
           <Text>Edit Profile View !!!</Text>
-          <Text>Here is the token : {token}</Text>
+  <Text>Here is the token : {token} bio : {bio}, username : {username}</Text>
 
           <View style={styles.saveButtonContainer1}>
             <View style={styles.saveButtonContainer}>
-              <Button title="SAVE" onPress={ () => this.logout() }></Button>
+              <Button title="SAVE" onPress={ () => this.sendUpdateInfo(token) }></Button>
             </View>
           </View>
 
@@ -248,7 +245,7 @@ const styles = StyleSheet.create({
     },
     saveButtonContainer1 : {
       position: "absolute",
-      bottom: 0,
+      bottom: 15,
       width: deviceWidth,
       alignItems: "center"
     },
@@ -314,4 +311,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, {getUserToken, refreshImage, uploadImageFetch})(EditProfileScreen);
+export default connect(mapStateToProps, {getUserToken, refreshImage, uploadImageFetch, updateUserInfoFetch})(EditProfileScreen);

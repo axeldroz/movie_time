@@ -7,10 +7,12 @@ import loginReducer from './loginReducer';
 import authReducer from './authReducer';
 import registerReducer from './registerReducer';
 import mainReducer from './mainReducer';
+import movieReducer from './movieReducer';
 
 export default combineReducers({
     login: loginReducer,
     auth: authReducer,
     register: registerReducer,
-    main: mainReducer
+    main: mainReducer,
+    movie: movieReducer
 })

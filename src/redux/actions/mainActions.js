@@ -11,6 +11,9 @@ import {
     UPLOAD_PROFILE_PICTURE_REFRESH,
     UPLOAD_PROFILE_PICTURE_SUCCESS,
     UPLOAD_PROFILE_PICTURE_FAILURE,
+    UPDATE_USER_INFO_REQUEST,
+    UPDATE_USER_INFO_SUCCESS,
+    UPDATE_USER_INFO_FAILURE,
   } from './types';
   
   //const url = 'https://randomuser.me//api/?results=${nb}&page=1';
@@ -49,6 +52,21 @@ export const uploadProfilePictureSuccess = json => ({
   
 export const uploadProfilePictureFailure = error => ({
     type: UPLOAD_PROFILE_PICTURE_FAILURE,
+    payload: error,
+});
+
+export const updateUserInfoRequest = json => ({
+    type: UPDATE_USER_INFO_REQUEST,
+    payload: json,
+});
+
+export const updateUserInfoSuccess = json => ({
+    type: UPDATE_USER_INFO_SUCCESS,
+    payload: json,
+});
+  
+export const updateUserInfoFailure = error => ({
+    type: UPDATE_USER_INFO_FAILURE,
     payload: error,
 });
   
@@ -99,12 +117,12 @@ export const userInfoFetch = (token) => {
   const createFormData = (photo, body) => {
     const data = new FormData();
   
-    data.append("photo", {
+    data.append("image", JSON.stringify({
       name: photo.fileName,
       type: photo.type,
       uri:
         Platform.OS === "android" ? photo.uri : photo.uri.replace("file://", "")
-    });
+    }));
   
     Object.keys(body).forEach(key => {
       data.append(key, body[key]);
@@ -114,23 +132,26 @@ export const userInfoFetch = (token) => {
   }  
 
   export const uploadImageFetch = (token, pictureData) => {
-    // const data = new FormData();
+     const data = new FormData();
     // data.append('name', 'avatar');
     // data.append('fileData', pictureData['base64']);
     console.log("uploadImageFetch");
-    const formData = new FormData();
-    pictureData.name = "Hello.jpg"
-    pictureData.uri = "file:/" + pictureData.uri
-    formData.append('image', pictureData);
-    console.log("datas:", formData);
+    var body = {
+    }
+    const formData = createFormData(pictureData, {});
+    //pictureData.name = "Hello.jpg"
+    //pictureData.uri = "file:/" + pictureData.uri
+    data.append('image', pictureData);
+
+    console.log("datas:", pictureData);
     const options = {
         method: 'POST',
-        headers: {
-         'x-access-token' : token,
+        headers: {'Accept': 'application/json',
+         'x-access-token' : token
         },
-        body: {test : "test"}
+        body: data
        };
-       console.log("datas =", pictureData);
+       console.log("datas =", formData);
     return async dispatch => {
         
         dispatch(uploadProfilePictureRequest());
@@ -145,11 +166,47 @@ export const userInfoFetch = (token) => {
             dispatch(uploadProfilePictureSuccess(json));
         
         } catch (error) {
-            console.log('ERROR=', error);
+            console.log('ERROR=', error.message);
             dispatch(uploadProfilePictureFailure(error));
         } 
     };
   };
+
+  userInit = {
+      username: "",
+      bio: ""
+  };
+
+export const updateUserInfoFetch = (token, data = userInit) => {
+    const options = {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json;charset=UTF-8',
+            'x-access-token' : token,
+        },
+        body: JSON.stringify(data)
+       };
+       console.log("datas =", data);
+    return async dispatch => {
+        
+        dispatch(updateUserInfoRequest());
+        try {
+            console.log("go to fetch")
+            let response = await fetch(URL_BASE + "/users/me/update", options);
+            let json = await response.json();
+            const str = JSON.stringify(json);
+            //console.error('json' + str);
+            //var str = JSON.stringify(json, null, 2);
+            console.log("json=" + str);
+            dispatch(updateUserInfoSuccess(json));
+        
+        } catch (error) {
+            console.log('ERROR=', error);
+            dispatch(updateUserInfoFailure(error));
+        } 
+    };
+};
 
 export const refreshImage = (pictureData) => {
     console.log("refreshImagfe", "pictureData");

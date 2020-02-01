@@ -12,6 +12,9 @@ import {
     UPLOAD_PROFILE_PICTURE_REFRESH,
     UPLOAD_PROFILE_PICTURE_SUCCESS,
     UPLOAD_PROFILE_PICTURE_FAILURE,
+    UPDATE_USER_INFO_REQUEST,
+    UPDATE_USER_INFO_SUCCESS,
+    UPDATE_USER_INFO_FAILURE,
   } from '../actions/types';
 
 // Initial state
@@ -28,6 +31,8 @@ const initialState = {
   profilePictureUri: '',
   profilePictureType: '',
   profilePictureFilename: '',
+  picture: '',
+  bio: 'test'
 };
 
 export default function reducer(state = initialState, action) {
@@ -54,7 +59,8 @@ export default function reducer(state = initialState, action) {
         email: action.payload.infos.email,
         id: action.payload.infos.id,
         created_date: action.payload.infos.created_date,
-        created_date: action.payload.infos.created_date
+        created_date: action.payload.infos.created_date,
+        picture: action.payload.infos.picture
       };
 
     case GET_USER_INFO_FAILURE:
@@ -62,7 +68,7 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         loading: false,
-        error: 'Error while signing in',
+        error: 'Error while getting user info',
         token: 'ERROR',
         message: 'error'
       };
@@ -83,7 +89,7 @@ export default function reducer(state = initialState, action) {
         profilePictureUri: action.payload.uri.uri,
         //profilePictureBase64: action.payload.base64
         profilePictureType: action.payload.type,
-        profilePictureFilename: action.payload.filename,
+        profilePictureFilename: action.payload.name,
       };
 
     case UPLOAD_PROFILE_PICTURE_SUCCESS:
@@ -107,6 +113,35 @@ export default function reducer(state = initialState, action) {
         message: 'error'
       };
 
+    case UPDATE_USER_INFO_REQUEST:
+        console.log("Request = Refresh");
+        console.log("Request");
+      return {
+        ...state,
+        loading: true,
+        message: 'loading',
+        error: '',
+      };
+    case UPDATE_USER_INFO_SUCCESS:
+      console.log("RESULT:", (action.payload));
+      return {
+        ...state,
+        isLoading: false,
+        message: 'message : ' + action.payload.message,
+        error: '',
+        username: action.payload.infos.username,
+        bio: action.payload.infos.bio,
+      };
+
+    case UPDATE_USER_INFO_FAILURE:
+        console.log("Fail");
+      return {
+        ...state,
+        loading: false,
+        error: 'Error while update user info',
+        token: 'ERROR',
+        message: 'error'
+      };
     default:
       return state;
   }

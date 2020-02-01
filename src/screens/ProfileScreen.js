@@ -22,7 +22,7 @@ import { userInfoFetch } from '../redux/actions/mainActions'
 
 class ProfileScreen extends Component {
   static navigationOptions = {
-    title: 'ProfileScreen'
+    title: 'Profile'
   };
 
   constructor() {
@@ -63,8 +63,10 @@ class ProfileScreen extends Component {
   render() {
     const message = this.props.store['main']['infos'];
     const username = this.props.store['main']['username'];
+    const picture = "http://localhost:3000/public/" + this.props.store['main']['picture']
+    const bio = this.props.store['main']['bio'];
     const created_date = this.props.store['main']['created_date'];
-    console.log('message=', message); 
+    console.log('picture=', picture); 
 
     return (
       <View style={styles.container}>
@@ -78,7 +80,7 @@ class ProfileScreen extends Component {
             
                 <View style={styles.imageContainer}>
                   <Image
-                    source={{uri :'https://avatars2.githubusercontent.com/u/20972154?s=460&v=4'} }
+                    source={{uri : picture} }
                     style={styles.profileImage}
                   >
                   </Image>
@@ -95,7 +97,7 @@ class ProfileScreen extends Component {
           <View style={styles.userInfoContainer}>
             <View style={styles.infoContainer}>
               <Text style={styles.infoTitle}>{ username }</Text>
-              <Text style={styles.infoText}>This is my bio { username }</Text>
+              <Text style={styles.infoText}>{ bio }</Text>
             </View>
             <View style={styles.infoContainer}>
               <Text style={styles.infoTitle}>Movies</Text>

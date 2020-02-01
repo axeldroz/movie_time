@@ -42,6 +42,7 @@ class MTTextInput extends Component {
         placeholder: PropTypes.string,
         secureTextEntry: PropTypes,
         onChangeText: PropTypes.func,
+        defaultValue: PropTypes.string
       }
 
   render() {
@@ -55,7 +56,7 @@ class MTTextInput extends Component {
                     placeholderTextColor = "white"
                     secureTextEntry={this.props.secureTextEntry}
                     onChangeText={this.props.onChangeText}
-                    value={this.props.value}
+                    defaultValue={this.props.defaultValue}
                 />
             </View>
         </View>
