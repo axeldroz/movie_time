@@ -2,12 +2,13 @@
  * Created by Axel Drozdzynski on November 27th 2019
  */
 
-import { createBottomTabNavigator } from 'react-navigation-tabs'
+import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { createAppContainer } from 'react-navigation';
 
-import ProfileScreen from '../screens/ProfileScreen'
-import FeedScreen from '../screens/FeedScreen'
-import ProfileStack from './ProfileStackNavigator'
+import ProfileScreen from '../screens/ProfileScreen';
+import FeedScreen from '../screens/FeedScreen';
+import ProfileStack from './ProfileStackNavigator';
+import AddMovieStack from './AddMovieStackNavigator';
 import Icon from 'react-native-vector-icons/Ionicons';
 import React from 'react';  
 
@@ -25,9 +26,9 @@ const Tabs = createBottomTabNavigator({
       }  
     },
     NewMovie: {
-      screen: ProfileStack,
+      screen: AddMovieStack,
       navigationOptions:{
-        tabBarLabel: "Profile",
+        tabBarLabel: "Movie",
         tabBarIcon:({tintColor})=>(  
             <Icon name="md-headset" color={tintColor} size={25}/>  
         )  
