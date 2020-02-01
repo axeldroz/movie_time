@@ -1,4 +1,8 @@
 
+/**
+ * Created by Axel Drozdzynski on December 1st
+ */
+
 import axios from 'axios';
 
 import {

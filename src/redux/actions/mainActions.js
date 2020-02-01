@@ -1,3 +1,7 @@
+/**
+ * Created by Axel Drozdzynski on December 1st
+ */
+
 import {
     URL_BASE,
     GET_USER_INFO_REQUEST,

@@ -1,3 +1,6 @@
+/**
+ * Created by Axel Drozdzynski on December 1st
+ */
 
 import React, { Component } from 'react';
 //import { View, Text } from 'react-native';
