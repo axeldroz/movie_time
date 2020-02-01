@@ -8,6 +8,10 @@ import {
     GET_USER_INFO_REQUEST,
     GET_USER_INFO_SUCCESS,
     GET_USER_INFO_FAILURE,
+    UPLOAD_PROFILE_PICTURE_REQUEST,
+    UPLOAD_PROFILE_PICTURE_REFRESH,
+    UPLOAD_PROFILE_PICTURE_SUCCESS,
+    UPLOAD_PROFILE_PICTURE_FAILURE,
   } from '../actions/types';
 
 // Initial state
@@ -18,7 +22,12 @@ const initialState = {
   created_date: '',
   email: '',
   id: 0,
-  message: 'loading'
+  message: 'loading',
+  avatarSource: '',
+  profilePictureBase64: '',
+  profilePictureUri: '',
+  profilePictureType: '',
+  profilePictureFilename: '',
 };
 
 export default function reducer(state = initialState, action) {
@@ -47,6 +56,7 @@ export default function reducer(state = initialState, action) {
         created_date: action.payload.infos.created_date,
         created_date: action.payload.infos.created_date
       };
+
     case GET_USER_INFO_FAILURE:
         console.log("Fail");
       return {
@@ -56,6 +66,47 @@ export default function reducer(state = initialState, action) {
         token: 'ERROR',
         message: 'error'
       };
+      case UPLOAD_PROFILE_PICTURE_REQUEST:
+        console.log("Request = Refresh");
+      return {
+        ...state,
+        loading: true,
+        message: 'loading',
+        error: '',
+      };
+
+      case UPLOAD_PROFILE_PICTURE_REFRESH:
+        console.log("Refresh");
+        console.log("payload", action.payload);
+      return {
+        ...state,
+        profilePictureUri: action.payload.uri.uri,
+        //profilePictureBase64: action.payload.base64
+        profilePictureType: action.payload.type,
+        profilePictureFilename: action.payload.filename,
+      };
+
+    case UPLOAD_PROFILE_PICTURE_SUCCESS:
+      console.log("success");
+      console.log("RESULT:", action.payload.token);
+      return {
+        ...state,
+        isLoading: false,
+        token: action.payload.token,
+        message: 'Success, here is your token : ' + action.payload.token,
+        error: '',
+      };
+
+    case UPLOAD_PROFILE_PICTURE_FAILURE:
+      console.log("Fail");
+      return {
+        ...state,
+        loading: false,
+        error: 'Error while signing in',
+        token: 'ERROR',
+        message: 'error'
+      };
+
     default:
       return state;
   }

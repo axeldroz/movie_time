@@ -94,15 +94,11 @@ class ProfileScreen extends Component {
           </View>
           <View style={styles.userInfoContainer}>
             <View style={styles.infoContainer}>
-              <Text style={styles.infoTitle}>Username</Text>
-              <Text style={styles.infoText}>{ username }</Text>
+              <Text style={styles.infoTitle}>{ username }</Text>
+              <Text style={styles.infoText}>This is my bio { username }</Text>
             </View>
             <View style={styles.infoContainer}>
-              <Text style={styles.infoTitle}>Created date</Text>
-              <Text style={styles.infoText}>{ created_date }</Text>
-            </View>
-            <View style={styles.infoContainer}>
-              <Text style={styles.infoTitle}>Your Movies</Text>
+              <Text style={styles.infoTitle}>Movies</Text>
               <Text style={styles.infoText}>{ created_date }</Text>
             </View>
           </View>

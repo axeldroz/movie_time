@@ -11,12 +11,18 @@ import {
     Text,
     Button,
     Dimensions,
-    Image
+    Image,
 } from 'react-native';
 
-import MTTextInput from '../components/MTTextInput';
+import ImagePicker from 'react-native-image-picker'
+//var ImagePicker = require('react-native-image-picker');
+//import * as ImagePicker from 'react-native-image-picker';
 
-import { removeUserToken } from '../redux/actions/auth/authActions';
+import MTTextInput from '../components/MTTextInput';
+import MTImagePickerButton from '../components/MTImagePickerButton';
+
+import { removeUserToken, getUserToken } from '../redux/actions/auth/authActions';
+import { refreshImage, uploadImageFetch } from '../redux/actions/mainActions'
 
 let deviceWidth = Dimensions.get('window').width;
 
@@ -24,7 +30,21 @@ class EditProfileScreen extends Component {
   static navigationOptions = {
     title: 'ProfileScreen'
   };
+
+  state = {
+    avatarSource: null,
+    videoSource: null
+  };
+
+  constructor() {
+    super();
+
+    this.imagePick = ImagePicker;
+  }
+
   componentDidMount() {
+    console.log("store: ", this.props.store['main']);
+    this.fetchUserInfo()
   }
 
   logout() {
@@ -33,15 +53,133 @@ class EditProfileScreen extends Component {
     });
   }
 
+  fetchUserInfo() {
+    this.props.getUserToken().then(() => {
+      const tokenSaved = this.props.store["auth"].token;
+      console.log("DID MOUNT = " + tokenSaved);
+      console.log("token=", tokenSaved);
+      if (tokenSaved !== null) {
+        console.log("OK555");
+        this.props.userInfoFetch(tokenSaved);
+      }
+    })
+    .catch(error => {
+      console.log("ERROR" + error);
+      this.setState({ error })
+    })
+  }
+
+  receiveImage(source, base64, type_, filename) {
+    console.log("receive");
+    //this.props.store['main']['avatarSource'] = source;
+    //this.props.store['main']['profilePictureUri'] = source;
+    //this.props.store['main']['base64'] = base64;
+    console.log("source=", source);
+    var data2 = {
+      uri: source,
+      type: type_,
+      name: filename,
+    };
+    console.log("data=", data2);
+    this.props.refreshImage(data2);
+  }
+
+  editPressed() {
+    const options = {
+        title: 'Select Image',
+        storageOptions: {
+            skipBackup: true,
+            path: 'images'
+        }
+    };
+
+    const self = this;
+
+    ImagePicker.showImagePicker(options, function (response) {
+        //console.log('Response = ', response);
+
+        if (response.didCancel) {
+          console.log('User cancelled photo picker');
+        }
+        else if (response.error) {
+          console.log('ImagePicker Error: ', response.error);
+        }
+        else if (response.customButton) {
+          console.log('User tapped custom button: ', response.customButton);
+        }
+        else {
+          var source, temp;
+          // You can display the image using either:
+          //source = {uri: 'data:image/jpeg;base64,' + response.data, isStatic: true};
+      
+          temp = response.data;
+      
+          //Or:
+          if (Platform.OS === 'android') {
+            source = {uri: response.uri, isStatic: true};
+          } else {
+            source = {uri: response.uri.replace('file://', ''), isStatic: true};
+          }
+
+          //self.state.avatarSource = source;
+          //self.state.base64 = temp;
+          //self.state.profilePictureUri = source;
+          //self.props.store['main']['avatarSource'] = source;
+          //self.props.store['main']['profilePictureUri'] = source;
+          //self.props.store['main']['base64'] = temp;
+          //self.props.store['main']['profilePictureUri'] = source;
+          //self.setState( {profilePictureUri : source });
+          /*this.setState({
+            avatarSource: "ok"
+          });*/
+          console.log("source = ", source)
+          this.receiveImage(source, temp, response.type, response.fileName);
+          
+          //console.log("avatarSource", source);
+          //console.log("base64", temp);
+        }
+    }.bind(this) );
+}
+
+send() {
+  console.log("Send !!");
+  this.props.getUserToken().then(() => {
+    const tokenSaved = this.props.store["auth"].token;
+    console.log("DID MOUNT = " + tokenSaved);
+    console.log("token=", tokenSaved);
+    if (tokenSaved !== null) {
+      console.log("OK555");
+      var token = tokenSaved
+      const base64 = this.props.store['main']['profilePictureBase64'];
+      const uri = this.props.store['main']['profilePictureUri'];
+      const type_ = this.props.store['main']['profilePictureType'];
+      const filename = this.props.store['main']['profilePictureFilename'];
+      console.log("token=", token, "base64");
+      var data = {
+        uri: uri,
+        type: type_,
+        name: filename,
+      };
+      this.props.uploadImageFetch(token, data);
+    }
+  })
+}
+
   render() {
-    var token = token = this.props.store["login"]["token"]; 
+    var token = this.props.store["login"]["token"]; 
+    const imageUri = (this.props.store['main']['profilePictureUri'] != '' && this.props.store['main']['profilePictureUri'] != undefined) 
+    ? this.props.store['main']['profilePictureUri'] : 'https://avatars2.githubusercontent.com/u/20972154?s=460&v=4';
+    const username = this.props.store['main']['username'];
+    console.log("username : ", username);
+ //console.log("===> imageUri = ", imageUri)
+ //   console.log("imagePRops:", this.props.store['main'])
     return (
       <View style={styles.container}>
           <View style={styles.imageAndButtonContainer1}>
             <View style={styles.imageAndButtonContainer2}>            
                 <View style={styles.imageContainer}>
                   <Image
-                    source={{uri :'https://avatars2.githubusercontent.com/u/20972154?s=460&v=4'} }
+                    source={ {uri : imageUri } }
                     style={styles.profileImage}
                   >
                   </Image>
@@ -49,9 +187,11 @@ class EditProfileScreen extends Component {
 
                 <View style={styles.editPictureButtonContainer} >
                   <Button title="EDIT PICTURE" 
-                    onPress={ () => this.goTo('EditProfileView') }
                     style={styles.editPictureButton}
-                  ></Button>
+                    onPress={ this.editPressed.bind(this) }
+                  /> 
+                <Button title="SEND" 
+                    onPress={ this.send.bind(this) } />
             </View>
             </View>
           </View>
@@ -61,6 +201,11 @@ class EditProfileScreen extends Component {
             
           <View style={styles.userInfos}>
             <MTTextInput placeholder="username"
+                        onChangeText={console.log("ok")}
+                        style={styles.textField}
+                        value={ username } />
+            
+            <MTTextInput placeholder="name"
                         onChangeText={console.log("ok")}
                         style={styles.textField} />
             
@@ -172,4 +317,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, {removeUserToken})(EditProfileScreen);
+export default connect(mapStateToProps, {getUserToken, refreshImage, uploadImageFetch})(EditProfileScreen);

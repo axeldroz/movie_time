@@ -1,5 +1,5 @@
 /**
- * written by Axel Drozdzynski on November 27th
+ * created by Axel Drozdzynski on November 27th
  */
 
 import React, { Component } from 'react';
@@ -55,6 +55,7 @@ class MTTextInput extends Component {
                     placeholderTextColor = "white"
                     secureTextEntry={this.props.secureTextEntry}
                     onChangeText={this.props.onChangeText}
+                    value={this.props.value}
                 />
             </View>
         </View>

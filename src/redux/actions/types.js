@@ -1,6 +1,7 @@
 import { Platform } from 'react-native';
 
 export const URL_BASE = (Platform.OS === 'ios') ? 'http://localhost:3000/api/v1' : 'http://10.0.2.2:3000/api/v1';
+//export const UR_BASE = 'http://0.0.0.0:3000/api/v1'
 
 export const GET_TOKEN = 'GET_TOKEN';
 export const SAVE_TOKEN = 'SAVE_TOKEN';
@@ -35,3 +36,8 @@ export const ERROR_STORE_TOKEN="ERROR_STORE_TOKEN";
  export const GET_USER_INFO_REQUEST="GET_USER_INFO"
  export const GET_USER_INFO_SUCCESS="GET_USER_INFO_SUCCESS"
  export const GET_USER_INFO_FAILURE="GET_USER_INFO_SUCCESS"
+
+ export const UPLOAD_PROFILE_PICTURE_REQUEST="UPLOAD_PROFILE_PICTURE_REQUEST"
+ export const UPLOAD_PROFILE_PICTURE_REFRESH="UPLOAD_PROFILE_PICTURE_REFRESH"
+ export const UPLOAD_PROFILE_PICTURE_SUCCESS="UPLOAD_PROFILE_PICTURE_SUCCESS"
+ export const UPLOAD_PROFILE_PICTURE_FAILURE="UPLOAD_PROFILE_PICTURE_FAILURE"
