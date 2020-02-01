@@ -7,6 +7,9 @@ import {
     ADD_USER_MOVIE_REQUEST,
     ADD_USER_MOVIE_SUCCESS,
     ADD_USER_MOVIE_FAILURE,
+    GET_ALL_MOVIES_REQUEST,
+    GET_ALL_MOVIES_SUCCESS,
+    GET_ALL_MOVIES_FAILURE,
   } from './types';
   
   //const url = 'https://randomuser.me//api/?results=${nb}&page=1';
@@ -22,6 +25,20 @@ export const addMovieSuccess = json => ({
   
 export const addMovieFailure = error => ({
     type: ADD_USER_MOVIE_FAILURE,
+    payload: error,
+});
+
+export const getAllMoviesRequest = () => ({
+    type: GET_ALL_MOVIES_REQUEST,
+});
+  
+export const getAllMoviesSuccess = json => ({
+    type: GET_ALL_MOVIES_SUCCESS,
+    payload: json,
+});
+  
+export const getAllMoviesFailure = error => ({
+    type: GET_ALL_MOVIES_FAILURE,
     payload: error,
 });
 
@@ -64,6 +81,33 @@ export const addMovieFetch = (token, movie = defaultMovie) => {
       } catch (error) {
         console.log("Error: ", error.message);
         dispatch(addMovieFailure(error));
+      }
+    };
+  };
+
+  export const getAllMoviesFetch = (token, movie = defaultMovie) => {
+    const options = {
+        method: 'GET',
+        headers: {
+            'x-access-token' : token
+        },
+      };
+      
+
+    return async dispatch => {
+      dispatch(getAllMoviesRequest());
+      try {
+        console.log('ok');
+        let response = await fetch(
+          URL_BASE + '/movies',
+          options
+        );
+        let json = await response.json();
+        dispatch(getAllMoviesSuccess(json));
+        
+      } catch (error) {
+        console.log("Error: ", error.message);
+        dispatch(getAllMoviesFailure(error));
       }
     };
   };

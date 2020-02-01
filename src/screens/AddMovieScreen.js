@@ -43,12 +43,13 @@ class AddMovieScreen extends Component {
     //userInfoFetch(this.props.store["auth"].token);
   }
 
-  fetchAddMovie(token) {
+  fetchAddMovie(token, username) {
     const movie = {
       name: this.state.name,
       season: this.state.season,
       episode: this.state.episode,
-      type: "TV_SHOW"
+      type: "TV_SHOW",
+      owner_username: username
     };
     console.log("movie:", movie);
     this.props.addMovieFetch(token, movie);
@@ -81,7 +82,7 @@ class AddMovieScreen extends Component {
           </View>
           <View style={styles.saveButtonContainer1}>
             <View style={styles.saveButtonContainer}>
-              <Button title="SAVE" onPress={ () => this.fetchAddMovie(token) }></Button>
+              <Button title="SAVE" onPress={ () => this.fetchAddMovie(token, username) }></Button>
             </View>
           </View>
       </View>
