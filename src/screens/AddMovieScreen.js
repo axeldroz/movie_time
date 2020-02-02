@@ -19,8 +19,9 @@ import {
 } from 'react-native';
 
 import MTTextInput from '../components/MTTextInput';
-import { getUserToken, removeUserToken } from '../redux/actions/auth/authActions'
-import { addMovieFetch } from '../redux/actions/movieActions'
+import { getUserToken, removeUserToken } from '../redux/actions/auth/authActions';
+import { addMovieFetch } from '../redux/actions/movieActions';
+import { userInfoFetch } from '../redux/actions/mainActions';
 
 let deviceWidth = Dimensions.get('window').width; // used for UI
 
@@ -39,8 +40,23 @@ class AddMovieScreen extends Component {
   }
 
   componentDidMount() {
-    
-    //userInfoFetch(this.props.store["auth"].token);
+    this.fetchUserInfo();
+  }
+
+  fetchUserInfo() {
+    this.props.getUserToken().then(() => {
+      const tokenSaved = this.props.store["auth"].token;
+      console.log("DID MOUNT = " + tokenSaved);
+      console.log("token=", tokenSaved);
+      if (tokenSaved !== null) {
+        console.log("OK555");
+        this.props.userInfoFetch(tokenSaved);
+      }
+    })
+    .catch(error => {
+      console.log("ERROR" + error);
+      this.setState({ error })
+    })
   }
 
   fetchAddMovie(token, username) {
@@ -121,4 +137,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, { getUserToken, addMovieFetch })(AddMovieScreen);
+export default connect(mapStateToProps, { getUserToken, addMovieFetch, userInfoFetch })(AddMovieScreen);
