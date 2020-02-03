@@ -16,8 +16,6 @@ import {
     UPDATE_USER_INFO_FAILURE,
   } from './types';
   
-  //const url = 'https://randomuser.me//api/?results=${nb}&page=1';
-  
 export const getUserInfoRequest = () => {    
     console.log('getUserInfoRequest');
     return (
@@ -91,13 +89,10 @@ export const userInfoFetch = (token) => {
             console.log('Ok dispatch');
             let response = await fetch(
             URL_BASE + '/users/me',
-            //'http://localhost:3000/api/v1/users/me' // for iOS
             options
             );
             let json = await response.json();
             const str = JSON.stringify(json);
-            //console.error('json' + str);
-            //var str = JSON.stringify(json, null, 2);
             console.log("json=" + str);
             dispatch(getUserInfoSuccess(json));
         
@@ -133,14 +128,8 @@ export const userInfoFetch = (token) => {
 
   export const uploadImageFetch = (token, pictureData) => {
      const data = new FormData();
-    // data.append('name', 'avatar');
-    // data.append('fileData', pictureData['base64']);
     console.log("uploadImageFetch");
-    var body = {
-    }
     const formData = createFormData(pictureData, {});
-    //pictureData.name = "Hello.jpg"
-    //pictureData.uri = "file:/" + pictureData.uri
     data.append('image', pictureData);
 
     console.log("datas:", pictureData);
@@ -160,8 +149,6 @@ export const userInfoFetch = (token) => {
             let response = await fetch(URL_BASE + "/users/picture", options);
             let json = await response.json();
             const str = JSON.stringify(json);
-            //console.error('json' + str);
-            //var str = JSON.stringify(json, null, 2);
             console.log("json=" + str);
             dispatch(uploadProfilePictureSuccess(json));
         
@@ -196,8 +183,6 @@ export const updateUserInfoFetch = (token, data = userInit) => {
             let response = await fetch(URL_BASE + "/users/me/update", options);
             let json = await response.json();
             const str = JSON.stringify(json);
-            //console.error('json' + str);
-            //var str = JSON.stringify(json, null, 2);
             console.log("json=" + str);
             dispatch(updateUserInfoSuccess(json));
         
@@ -209,7 +194,7 @@ export const updateUserInfoFetch = (token, data = userInit) => {
 };
 
 export const refreshImage = (pictureData) => {
-    console.log("refreshImagfe", "pictureData");
+    console.log("refreshImage", "pictureData");
     return async dispatch => {
         dispatch(uploadProfilePictureRefresh(pictureData));
     }

@@ -5,10 +5,8 @@
 import { createStackNavigator } from 'react-navigation-stack';
 import { createAppContainer } from 'react-navigation';
 
-import Tabs from './TabNavigator'
-import LoginScreen from '../screens/LoginScreen.js'
-import NextScreen from '../screens/NextScreen'
-import RegisterScreen from '../screens/RegisterScreen'
+import LoginScreen from '../screens/LoginScreen.js';
+import RegisterScreen from '../screens/RegisterScreen';
 
 const Stack = createStackNavigator({
   Login: {

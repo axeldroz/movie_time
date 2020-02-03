@@ -12,8 +12,6 @@ import {
     GET_ALL_MOVIES_FAILURE,
   } from './types';
   
-  //const url = 'https://randomuser.me//api/?results=${nb}&page=1';
-  
 export const addMovieRequest = () => ({
     type: ADD_USER_MOVIE_REQUEST,
 });
@@ -97,7 +95,6 @@ export const addMovieFetch = (token, movie = defaultMovie) => {
     return async dispatch => {
       dispatch(getAllMoviesRequest());
       try {
-        console.log('ok');
         let response = await fetch(
           URL_BASE + '/movies',
           options
