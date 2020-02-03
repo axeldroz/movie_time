@@ -1,15 +1,12 @@
 import React from 'react';
 import {
     ActivityIndicator,
-    AsyncStorage,
     StatusBar,
     StyleSheet,
     View,
 } from 'react-native';
 import { connect } from 'react-redux';
 import { getUserToken } from '../redux/actions/auth/authActions'
-
-
 
 const styles = StyleSheet.create({
     container: {
@@ -32,7 +29,6 @@ class AuthLoadingScreen extends React.Component {
     }
 
     _bootstrapAsync = () => {
-        console.log("DID MOUNT" + this.props.store["auth"].token);
         this.props.getUserToken().then(() => {
             const tokenSaved = this.props.store["auth"].token;
             console.log("DID MOUNT = " + tokenSaved);

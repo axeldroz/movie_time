@@ -1,12 +1,7 @@
 
 import React, { Component } from 'react';
-//import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
 import {
-    ActivityIndicator,
-    AsyncStorage,
-    StatusBar,
-    StyleSheet,
     View,
     Text,
     Button
@@ -16,10 +11,11 @@ class NextScreen extends Component {
   static navigationOptions = {
     title: 'NextScreen'
   };
+
   componentDidMount() {
   }
-  render() {
 
+  render() {
     return (
       <View>
         <Text>IS OK !!!</Text>

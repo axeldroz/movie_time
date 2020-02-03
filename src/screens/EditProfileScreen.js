@@ -49,7 +49,6 @@ class EditProfileScreen extends Component {
   fetchUserInfo() {
     this.props.getUserToken().then(() => {
       const tokenSaved = this.props.store["auth"].token;
-      console.log("DID MOUNT = " + tokenSaved);
       console.log("token=", tokenSaved);
       if (tokenSaved !== null) {
         console.log("OK555");
@@ -64,16 +63,12 @@ class EditProfileScreen extends Component {
 
   receiveImage(source, base64, type_, filename) {
     console.log("receive");
-    //this.props.store['main']['avatarSource'] = source;
-    //this.props.store['main']['profilePictureUri'] = source;
-    //this.props.store['main']['base64'] = base64;
     console.log("source=", source);
     var data2 = {
       uri: source,
       type: type_,
       name: filename,
     };
-    console.log("data=", data2);
     this.props.refreshImage(data2);
   }
 
@@ -86,11 +81,7 @@ class EditProfileScreen extends Component {
         }
     };
 
-    const self = this;
-
     ImagePicker.showImagePicker(options, function (response) {
-        //console.log('Response = ', response);
-
         if (response.didCancel) {
           console.log('User cancelled photo picker');
         }
@@ -111,8 +102,6 @@ class EditProfileScreen extends Component {
           }
           console.log("source = ", source)
           this.receiveImage(source, temp, response.type, response.fileName);
-          //console.log("avatarSource", source);
-          //console.log("base64", temp);
         }
     }.bind(this) );
 }
@@ -121,17 +110,11 @@ send() {
   console.log("Send !!");
   this.props.getUserToken().then(() => {
     const tokenSaved = this.props.store["auth"].token;
-    console.log("DID MOUNT = " + tokenSaved);
-    console.log("token=", tokenSaved);
     if (tokenSaved !== null) {
-      console.log("OK555");
       var token = tokenSaved
-      const base64 = this.props.store['main']['profilePictureBase64'];
       const uri = this.props.store['main']['profilePictureUri'];
       const type_ = this.props.store['main']['profilePictureType'];
       const filename = this.props.store['main']['profilePictureFilename'];
-      console.log("token=", token, "base64");
-      console.log("filename", this.props.store['main'])
       var data = {
         uri: uri,
         type: type_,
@@ -143,7 +126,6 @@ send() {
 }
 
 sendUpdateInfo(token) {
-  console.log("token:", token);
   var username = this.props.store['main']['username'];
   var bio = this.props.store['main']['bio'];
 
@@ -162,10 +144,7 @@ sendUpdateInfo(token) {
     ? this.props.store['main']['profilePictureUri'] : 'https://avatars2.githubusercontent.com/u/20972154?s=460&v=4';
     const username = this.props.store['main']['username'];
     const bio = this.props.store['main']['bio'];
-    console.log("username : ", username);
-    console.log("Token : ", token);
- //console.log("===> imageUri = ", imageUri)
- //   console.log("imagePRops:", this.props.store['main'])
+    
     return (
       <View style={styles.container}>
           <View style={styles.imageAndButtonContainer1}>

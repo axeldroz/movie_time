@@ -5,24 +5,12 @@
 import React, { Component } from 'react';
 
 import {
-    ActivityIndicator,
-    AsyncStorage,
-    StatusBar,
     StyleSheet,
     View,
-    Text,
-    Button,
     TextInput,
-    Platform
 } from 'react-native';
 
 import PropTypes from 'prop-types';
-
-//import TextInput from '../components/uikit/TextInput'
-import { whileStatement } from '@babel/types';
-//import { getUserToken } from '../authActions';
-
-import { TextField } from 'react-native-material-textfield';
 
 const Colors = {
     brandText: '#fff',

@@ -4,12 +4,8 @@
  */
 
 import React, { Component } from 'react';
-//import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
 import {
-    ActivityIndicator,
-    AsyncStorage,
-    StatusBar,
     Image,
     StyleSheet,
     View,
@@ -30,8 +26,7 @@ class ProfileScreen extends Component {
   }
 
   componentDidMount() {
-    this.fetchUserInfo()
-    //userInfoFetch(this.props.store["auth"].token);
+    this.fetchUserInfo();
   }
 
   fetchUserInfo() {

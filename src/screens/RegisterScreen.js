@@ -61,15 +61,10 @@ class RegisterScreen extends React.Component {
     handleChange(event = {}) {
         const name = event.target && event.target.name;
         const value = event.target && event.target.value;
-      
-        //this.state.username = value;
     }
 
     loadAction(username, password) {
-        //console.log("YO!!!!!!!!!!!!!");
         console.log(( "username=" + username + ", password=" + password ) );
-        //username = "axeldroz@movietime.com";
-        //password = "password33";
         username = username.toLowerCase();
         this.props.registerFetch(username, password).then(() => {
             var token = token = this.props.store["login"]["token"]; 
@@ -81,25 +76,17 @@ class RegisterScreen extends React.Component {
                         console.log("GET = " + tokenSaved);
                         this.props.navigation.navigate('SignedIn');
                     })
-                })// we save the token
-                //this.props.navigation.navigate('Main');
+                });
             } else {
                 console.log("not connected");
             }
         })
     }
-    /*
-                            <View style={styles.textinputcontainer}>
-                            <TextInput placeholder="password" placeholderTextColor = "white" secureTextEntry={true}
-                            onChangeText={(text) => this.setState( { password: text } )}/>
-                        </View>
-                        */
+
     render() {
-        const {navigate} = this.props.navigation;
         const token = this.props.store["login"]["token"];
         const msg = this.props.store["login"]["message"];
-        const err = this.props.store["login"];
-        console.log("MESSAGE : ", token);
+
         return (
             <View style={styles.container}>
                 <View style={styles.logincontainer}>

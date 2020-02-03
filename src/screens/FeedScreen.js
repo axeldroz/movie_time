@@ -3,19 +3,14 @@ import React, { Component } from 'react';
 //import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
 import {
-    ActivityIndicator,
-    AsyncStorage,
-    StatusBar,
     StyleSheet,
     View,
     Text,
-    Button,
     FlatList
 } from 'react-native';
 
 import { getUserToken, removeUserToken } from '../redux/actions/auth/authActions'
 import { addMovieFetch, getAllMoviesFetch } from '../redux/actions/movieActions'
-import reducer from '../redux/reducers/loginReducer';
 
 class FeedScreen extends Component {
   static navigationOptions = {
@@ -32,8 +27,6 @@ class FeedScreen extends Component {
   componentDidMount() {
     this.props.getUserToken().then(() => {
       const tokenSaved = this.props.store["auth"].token;
-      console.log("DID MOUNT = " + tokenSaved);
-      console.log("token=", tokenSaved);
       if (tokenSaved !== null) {
         console.log("OK555");
         this.props.getAllMoviesFetch(tokenSaved);

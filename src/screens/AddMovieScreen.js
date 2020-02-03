@@ -4,16 +4,10 @@
  */
 
 import React, { Component } from 'react';
-//import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
 import {
-    ActivityIndicator,
-    AsyncStorage,
-    StatusBar,
-    Image,
     StyleSheet,
     View,
-    Text,
     Dimensions,
     Button
 } from 'react-native';
@@ -36,7 +30,7 @@ class AddMovieScreen extends Component {
       name: "",
       episode: "",
       season: ""
-  }
+    }
   }
 
   componentDidMount() {
@@ -46,10 +40,8 @@ class AddMovieScreen extends Component {
   fetchUserInfo() {
     this.props.getUserToken().then(() => {
       const tokenSaved = this.props.store["auth"].token;
-      console.log("DID MOUNT = " + tokenSaved);
       console.log("token=", tokenSaved);
       if (tokenSaved !== null) {
-        console.log("OK555");
         this.props.userInfoFetch(tokenSaved);
       }
     })

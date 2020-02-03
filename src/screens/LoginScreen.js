@@ -4,20 +4,14 @@
 
 import React from 'react';
 import {
-    ActivityIndicator,
-    AsyncStorage,
-    StatusBar,
     StyleSheet,
     View,
     Text,
     Button,
-    TextInput
 } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-//import TextInput from '../components/uikit/TextInput'
-import { whileStatement } from '@babel/types';
 import { loginFetch } from '../redux/actions/loginAction';
 import { getUserToken, saveUserToken } from '../redux/actions/auth/authActions'
 import MTTextInput from '../components/MTTextInput'
@@ -35,7 +29,6 @@ class LoginScreen extends React.Component {
             username: 'YO',
             password: ''
         }
-        //this.handleChange= this.handleChange.bind(this);
     }
 
     componentDidMount() {
@@ -61,8 +54,6 @@ class LoginScreen extends React.Component {
     handleChange(event = {}) {
         const name = event.target && event.target.name;
         const value = event.target && event.target.value;
-      
-        //this.state.username = value;
     }
 
     goTo(screenName) {
@@ -70,40 +61,28 @@ class LoginScreen extends React.Component {
     }
 
     loadLogin(username, password) {
-        //console.log("YO!!!!!!!!!!!!!");
         console.log(( "username=" + username + ", password=" + password ) );
-        //username = "axeldroz@movietime.com";
-        //password = "password33";
         username = username.toLowerCase();
         this.props.loginFetch(username, password).then(() => {
             var token = token = this.props.store["login"]["token"]; 
             if (token !== '' && token != 'ERROR') {
-                console.log("connected");
                 this.props.saveUserToken(token).then(() => {
                     this.props.getUserToken().then(() => {
                         const tokenSaved = this.props.store["auth"].token;
-                        console.log("GET = " + tokenSaved);
                         this.props.navigation.navigate('SignedIn');
                     })
-                })// we save the token
-                //this.props.navigation.navigate('Main');
+                })
             } else {
                 console.log("not connected");
             }
         })
     }
-    /*
-                            <View style={styles.textinputcontainer}>
-                            <TextInput placeholder="password" placeholderTextColor = "white" secureTextEntry={true}
-                            onChangeText={(text) => this.setState( { password: text } )}/>
-                        </View>
-                        */
+
     render() {
-        const {navigate} = this.props.navigation;
         const token = this.props.store["login"]["token"];
         const msg = this.props.store["login"]["message"];
         const err = this.props.store["login"];
-        console.log("MESSAGE : ", token);
+
         return (
             <View style={styles.container}>
                 <View style={styles.logincontainer}>
@@ -195,10 +174,5 @@ const mapStateToProps = state => {
       store: state,
     };
   };
-
-
-const mapDispatchToProps = dispatch => ({
-    loginFetch: (username, password) => dispatch(getUserToken()),
-});
 
 export default connect(mapStateToProps, {loginFetch, getUserToken, saveUserToken})(LoginScreen);

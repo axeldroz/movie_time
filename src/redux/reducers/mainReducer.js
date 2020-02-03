@@ -87,7 +87,6 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         profilePictureUri: action.payload.uri.uri,
-        //profilePictureBase64: action.payload.base64
         profilePictureType: action.payload.type,
         profilePictureFilename: action.payload.name,
       };

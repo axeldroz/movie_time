@@ -3,7 +3,6 @@ import { AsyncStorage } from 'react-native';
 
 export const MyContext = React.createContext();
 
-
 export default class MyProvider extends Component {
     state = {
         token: '',
@@ -37,7 +36,6 @@ export default class MyProvider extends Component {
         }
 
     }
-
 
     componentWillMount() {
         AsyncStorage.getItem('userToken')

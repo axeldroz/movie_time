@@ -5,7 +5,6 @@
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { createAppContainer } from 'react-navigation';
 
-import ProfileScreen from '../screens/ProfileScreen';
 import FeedScreen from '../screens/FeedScreen';
 import ProfileStack from './ProfileStackNavigator';
 import AddMovieStack from './AddMovieStackNavigator';

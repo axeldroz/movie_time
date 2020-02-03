@@ -4,19 +4,10 @@
 
 import React, { Component } from 'react';
 
-import URL_BASE from '../redux/actions/types';
-
 import {
-    ActivityIndicator,
-    AsyncStorage,
-    StatusBar,
     StyleSheet,
-    View,
-    Text,
     Button,
-    TextInput,
     Platform,
-    TouchableHighlight
 } from 'react-native';
 
 import ImagePicker from 'react-native-image-picker'
@@ -60,8 +51,6 @@ class MTImagePickerButton extends Component {
         };
 
         ImagePicker.showImagePicker(options, (response) => {
-            //console.log('Response = ', response);
-
             if (response.didCancel) {
               console.log('User cancelled photo picker');
             }
@@ -73,18 +62,12 @@ class MTImagePickerButton extends Component {
             }
             else {
               var source, temp;
-              // You can display the image using either:
-              //source = {uri: 'data:image/jpeg;base64,' + response.data, isStatic: true};
-          
               temp = response.data;
-          
-              //Or:
               if (Platform.OS === 'android') {
                 source = {uri: response.uri, isStatic: true};
               } else {
                 source = {uri: response.uri.replace('file://', ''), isStatic: true};
               }
-          
               this.setState({
                 avatarSource: source,
                 imgBase64: temp,

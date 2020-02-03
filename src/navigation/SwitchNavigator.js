@@ -5,9 +5,6 @@
 import { createSwitchNavigator } from 'react-navigation'
 import { createAppContainer } from 'react-navigation';
 
-import ProfileScreen from '../screens/ProfileScreen'
-import FeedScreen from '../screens/FeedScreen'
-import LoginScreen from '../screens/LoginScreen';
 import AuthLoading from '../screens/AuthLoadingScreen'
 import Tabs from './TabNavigator';
 import RegisterStack from './RegisterStackNavigator'

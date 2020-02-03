@@ -6,7 +6,7 @@ import { createStackNavigator } from 'react-navigation-stack';
 import { createAppContainer } from 'react-navigation';
 
 import ProfileScreen from '../screens/ProfileScreen';
-import EditProfileScreen from '../screens/EditProfileScreen'
+import EditProfileScreen from '../screens/EditProfileScreen';
 
 const ProfileStack = createStackNavigator({
   ProfileView: {
