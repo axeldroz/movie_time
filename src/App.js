@@ -12,8 +12,8 @@ import {
   View,
 } from 'react-native';
 
-import reducer from './src/redux/reducers/index'; // combineReducer
-import SwitchNav from './src/navigation/SwitchNavigator'
+import reducer from './redux/reducers/index'; // combineReducer
+import SwitchNav from './navigation/SwitchNavigator'
 
 const store = createStore(reducer, applyMiddleware(thunk));
 

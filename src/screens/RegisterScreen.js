@@ -177,9 +177,4 @@ const mapStateToProps = state => {
     };
   };
 
-
-const mapDispatchToProps = dispatch => ({
-    loginFetch: (username, password) => dispatch(getUserToken()),
-});
-
 export default connect(mapStateToProps, {registerFetch, saveUserToken})(RegisterScreen);

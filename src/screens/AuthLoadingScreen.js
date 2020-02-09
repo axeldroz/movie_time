@@ -31,7 +31,6 @@ class AuthLoadingScreen extends React.Component {
     _bootstrapAsync = () => {
         this.props.getUserToken().then(() => {
             const tokenSaved = this.props.store["auth"].token;
-            console.log("DID MOUNT = " + tokenSaved);
             if (tokenSaved !== null)
                 this.props.navigation.navigate('SignedIn');
             else {
